@@ -20,7 +20,10 @@ erl_crash.dump
 *.ez
 
 # Ignore package tarball (built via "mix hex.build").
-aoc2021-*.tar
+advent_of_code-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# Temporary environmental variables
+*.env
