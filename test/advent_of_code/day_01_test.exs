@@ -4,18 +4,18 @@ defmodule AdventOfCode.Day01Test do
   import AdventOfCode.Day01
 
   test "part1" do
-    input = [
-      199,
-      200,
-      208,
-      210,
-      200,
-      207,
-      240,
-      269,
-      260,
-      263
-    ]
+    input = """
+    199
+    200
+    208
+    210
+    200
+    207
+    240
+    269
+    260
+    263
+    """
 
     result = part1(input)
 
@@ -23,18 +23,18 @@ defmodule AdventOfCode.Day01Test do
   end
 
   test "part2" do
-    input = [
-      199,
-      200,
-      208,
-      210,
-      200,
-      207,
-      240,
-      269,
-      260,
-      263
-    ]
+    input = """
+    199
+    200
+    208
+    210
+    200
+    207
+    240
+    269
+    260
+    263
+    """
 
     result = part2(input)
 
