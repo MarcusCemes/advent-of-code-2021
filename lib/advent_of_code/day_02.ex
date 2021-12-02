@@ -1,7 +1,5 @@
 defmodule AdventOfCode.Day02 do
-  alias AdventOfCode.Utils
-
-  @spec part1(String.t()) :: integer()
+  @spec part1(Stream.t(binary)) :: integer
   def part1(args) do
     {distance, depth} =
       parse_args(args)
@@ -16,7 +14,7 @@ defmodule AdventOfCode.Day02 do
     distance * depth
   end
 
-  @spec part2(String.t()) :: integer
+  @spec part2(Stream.t(binary)) :: integer
   def part2(args) do
     {distance, depth, _} =
       parse_args(args)
@@ -31,13 +29,13 @@ defmodule AdventOfCode.Day02 do
     distance * depth
   end
 
+  @spec parse_args(Stream.t(binary)) :: Stream.t({String.t(), integer})
   def parse_args(args) do
     args
-    |> Utils.parse_lines()
-    |> Enum.map(&parse_instruction/1)
+    |> Stream.map(&parse_instruction/1)
   end
 
-  @spec parse_instruction(String.t()) :: {String.t(), integer()}
+  @spec parse_instruction(binary) :: {String.t(), integer}
   def parse_instruction(line) do
     [instruction, paramter] = String.split(line, " ")
 
