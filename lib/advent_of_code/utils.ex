@@ -17,4 +17,11 @@ defmodule AdventOfCode.Utils do
     |> Stream.map(&String.trim/1)
     |> Stream.filter(&(String.length(&1) != 0))
   end
+
+  @spec parse_int(binary) :: integer
+  def parse_int(number) do
+    case Integer.parse(number) do
+      {integer, ""} -> integer
+    end
+  end
 end
