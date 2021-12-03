@@ -51,22 +51,22 @@ defmodule AdventOfCode.Day03 do
     init = List.duplicate(0, length(first_element))
 
     {number_ones, total} =
-      entries
-      |> Enum.reduce({init, 0}, fn entry, {count, total} ->
-        new_freq =
-          Enum.zip(count, entry)
-          |> Enum.map(fn {a, b} -> a + b end)
-
-        {new_freq, total + 1}
+      Enum.reduce(entries, {init, 0}, fn entry, {count, total} ->
+        {merge(count, entry), total + 1}
       end)
 
     threshold = total / 2
     Enum.map(number_ones, &bool_to_int(&1 >= threshold))
   end
 
+  @spec merge([integer], [integer]) :: [integer]
+  defp merge(a, b) do
+    Enum.zip(a, b) |> Enum.map(fn {a, b} -> a + b end)
+  end
+
   @spec bool_to_int(boolean) :: 0 | 1
-  def bool_to_int(true), do: 1
-  def bool_to_int(false), do: 0
+  defp bool_to_int(true), do: 1
+  defp bool_to_int(false), do: 0
 
   @spec parse_args(Stream.t(binary)) :: Stream.t([integer])
   defp parse_args(args) do
