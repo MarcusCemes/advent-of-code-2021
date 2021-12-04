@@ -1,4 +1,6 @@
 defmodule AdventOfCode.Day01 do
+  import AdventOfCode.Utils
+
   @spec part1(Stream.t(binary)) :: integer
   def part1(args) do
     parse_args(args)
@@ -18,10 +20,7 @@ defmodule AdventOfCode.Day01 do
   @spec parse_args(Stream.t(binary)) :: [integer]
   def parse_args(args) do
     args
-    |> Enum.map(fn line ->
-      case Integer.parse(line) do
-        {integer, ""} -> integer
-      end
-    end)
+    |> sanitise_stream()
+    |> Enum.map(&parse_int/1)
   end
 end

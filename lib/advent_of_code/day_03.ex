@@ -71,6 +71,7 @@ defmodule AdventOfCode.Day03 do
   @spec parse_args(Stream.t(binary)) :: Stream.t([integer])
   defp parse_args(args) do
     args
+    |> sanitise_stream()
     |> Stream.map(&String.graphemes/1)
     |> Stream.map(fn digits -> Enum.map(digits, &parse_int/1) end)
   end
