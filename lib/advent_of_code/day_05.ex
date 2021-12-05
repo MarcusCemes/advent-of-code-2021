@@ -19,14 +19,13 @@ defmodule AdventOfCode.Day05 do
 
   @spec number_intersections(Stream.t(vent()), :filter | :dont_filter) :: integer()
   defp number_intersections(vents, should_filter) do
-    filter_fn =
+    vents
+    |> Enum.filter(
       case should_filter do
         :filter -> &hor_or_vert?/1
         :dont_filter -> fn _ -> true end
       end
-
-    vents
-    |> Enum.filter(filter_fn)
+    )
     |> generate_heatmap()
     |> Map.values()
     |> Enum.filter(&(&1 >= 2))
