@@ -1,6 +1,4 @@
 defmodule AdventOfCode.Day02 do
-  import AdventOfCode.Utils
-
   @spec part1(Stream.t(binary)) :: integer
   def part1(args) do
     {distance, depth} =

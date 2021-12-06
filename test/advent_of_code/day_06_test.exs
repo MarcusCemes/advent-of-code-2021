@@ -2,20 +2,17 @@ defmodule AdventOfCode.Day06Test do
   use ExUnit.Case
 
   import AdventOfCode.Day06
+  import AdventOfCode.Utils
 
-  @tag :skip
   test "part1" do
-    input = nil
+    input = read_sample_data(6)
     result = part1(input)
-
-    assert result
+    assert result == 5934
   end
 
-  @tag :skip
   test "part2" do
-    input = nil
+    input = read_sample_data(6)
     result = part2(input)
-
-    assert result
+    assert result == 26_984_457_539
   end
 end
