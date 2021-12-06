@@ -30,7 +30,7 @@ defmodule Mix.Tasks.Bench do
 
   defp filter_args(cases, args) do
     Enum.filter(cases, fn {day, part} ->
-      Enum.member?(args, "#{pad_day(day)}.#{part}")
+      Enum.member?(args, "#{day}.#{part}")
     end)
   end
 end
