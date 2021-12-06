@@ -16,15 +16,31 @@ Feel free to take a look!
 |   6 | Lanternfish          | [day_06.ex][d06] |   🟢   |   🟢   |
 |   7 | ...                  |                  |        |        |
 
-## Running
+### Verdict
 
-To run a particular solution on the data in the `data` directory, try:
+> 🚀 Elixir is amazing.
+
+It takes a few days to understand how to use pattern matching more effectively and how not to create deeply nested anonymous functions, but the language is faster than I expected, and really a pleasure to write in.
+
+Pattern matching and the pipe operator allow you to compose complex chains of reusable logic that are easy to inspect and map out in your head. For most data manipulation concerns, there's a function hidden somewhere within the standard library that does just about anything you need it to do.
+
+The language server is not quite the same standard as you might expect with more mainstream languages, it can be a little tricky to track down type errors with Dialyzer, it usually just tells you "something is wrong somewhere" by complaining about "no local returns".
+
+## Installation
+
+Get a copy of [Elixir][elixir], it will also require Erlang. Then clone this repository and run `mix deps.get`.
+
+## Let's run!
+
+To solve all days at once, run:
 
 ```bash
-$ mix d01.p1
+$ mix solve
 ```
 
-## Tests
+Each problem is run inside it's own Task, which Erlang will try its best to map to an available CPU core. It shouldn't take more than a few milliseconds.
+
+## Sample testing
 
 Each problem has its own test case based on the provided sample. Run them like so:
 
@@ -90,10 +106,15 @@ Estimated total run time: 1.40 min
 
 This repository uses a modified version of [this template][template]. Thanks Mitchell!
 
+## License
+
+Distributed under the MIT Licence. See [LICENCE](LICENCE) for more information.
+
 [elixir-badge]: https://img.shields.io/static/v1?label=&message=Elixir&logo=elixir&color=4B275F&style=for-the-badge
 [test-badge]: https://img.shields.io/github/workflow/status/MarcusCemes/advent-of-code-2021/CI?label=TESTS&style=for-the-badge
 [commit-badge]: https://img.shields.io/github/last-commit/MarcusCemes/advent-of-code-2021?style=for-the-badge
 [advent-of-code]: https://adventofcode.com/
+[elixir]: https://elixir-lang.org/
 [template]: https://github.com/mhanberg/advent-of-code-elixir-starterF
 [d01]: lib/advent_of_code/day_01.ex
 [d02]: lib/advent_of_code/day_02.ex
