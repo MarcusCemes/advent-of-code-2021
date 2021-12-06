@@ -4,7 +4,16 @@ defmodule Mix.Tasks.Bench do
   import AdventOfCode.Utils
 
   @shortdoc "Benchmark all problems"
-  def run(_args) do
+
+  def run([]) do
+    IO.puts(
+      IO.ANSI.red() <>
+        "Missing arguments, \"all\" or a list of problems such as \"1.1\"." <>
+        IO.ANSI.reset()
+    )
+  end
+
+  def run(args) do
     [
       {1, 1, &AdventOfCode.Day01.part1/1},
       {1, 2, &AdventOfCode.Day01.part2/1},
@@ -19,6 +28,7 @@ defmodule Mix.Tasks.Bench do
       {6, 1, &AdventOfCode.Day06.part1/1},
       {6, 2, &AdventOfCode.Day06.part2/1}
     ]
+    |> filter_args(args)
     |> Enum.map(&generate_case/1)
     |> Map.new()
     |> Benchee.run()
@@ -31,5 +41,15 @@ defmodule Mix.Tasks.Bench do
       "Day #{day_padded}, Part #{part}",
       {case_fn, before_scenario: fn _ -> read_data(day) |> Enum.to_list() end}
     }
+  end
+
+  defp filter_args(cases, ["all"]), do: cases
+
+  defp filter_args(cases, args) do
+    Enum.filter(cases, fn item ->
+      {day, part, _} = item
+      padded_day = String.pad_leading(Integer.to_string(day), 0, "0")
+      Enum.member?(args, "#{padded_day}.#{part}")
+    end)
   end
 end
