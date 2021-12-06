@@ -6,7 +6,7 @@ defmodule Mix.Tasks.Solve do
   @shortdoc "Run a particular solution"
 
   def run(_args) do
-    IO.puts("\n| Day |           Part 1 |           Part 2 |")
+    IO.puts("\n|   Day   |           Part 1 |           Part 2 |")
     IO.puts("| ------- | ---------------- | ---------------- |")
 
     Task.async_stream(1..25, &run_day/1)
@@ -30,7 +30,7 @@ defmodule Mix.Tasks.Solve do
   defp format_day({:ok, {_, {:ok, nil}, {:ok, nil}}}), do: nil
 
   defp format_day({:ok, {d, r1, r2}}) do
-    "|    #{pad_day(d)}   | #{format_part(r1)} | #{format_part(r2)} |"
+    "|   #{pad_day(d, " ")}    | #{format_part(r1)} | #{format_part(r2)} |"
   end
 
   defp format_day({:err, _}) do

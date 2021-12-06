@@ -53,6 +53,15 @@ defmodule AdventOfCode.Utils do
     |> String.pad_leading(2, "0")
   end
 
+  @doc """
+  Pads an integer day into a two-digit string code.
+  """
+  @spec pad_day(integer(), String.t()) :: String.t()
+  def pad_day(day, spacer) do
+    Integer.to_string(day)
+    |> String.pad_leading(2, spacer)
+  end
+
   @spec data_path(integer, :normal | :sample) :: String.t()
   defp data_path(problem, type) do
     extension =
