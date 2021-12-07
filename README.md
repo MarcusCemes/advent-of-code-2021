@@ -6,15 +6,16 @@ These are my Elixir solutions for the [Advent of Code 2021][advent-of-code] as a
 
 Feel free to take a look!
 
-| Day | Name                 | Source           | Part 1 | Part 2 |
-| --: | -------------------- | ---------------- | :----: | :----: |
-|   1 | Sonar Sweep          | [day_01.ex][d01] |   🟢   |   🟢   |
-|   2 | Dive!                | [day_02.ex][d02] |   🟢   |   🟢   |
-|   3 | Binary Diagnostic    | [day_03.ex][d03] |   🟢   |   🟢   |
-|   4 | Giant Squid          | [day_04.ex][d04] |   🟢   |   🟢   |
-|   5 | Hydrothermal Venture | [day_05.ex][d05] |   🟢   |   🟢   |
-|   6 | Lanternfish          | [day_06.ex][d06] |   🟢   |   🟢   |
-|   7 | ...                  |                  |        |        |
+| Day | Name                    | Source           | Part 1 | Part 2 |
+| --: | ----------------------- | ---------------- | :----: | :----: |
+|   1 | Sonar Sweep             | [day_01.ex][d01] |   🟢   |   🟢   |
+|   2 | Dive!                   | [day_02.ex][d02] |   🟢   |   🟢   |
+|   3 | Binary Diagnostic       | [day_03.ex][d03] |   🟢   |   🟢   |
+|   4 | Giant Squid             | [day_04.ex][d04] |   🟢   |   🟢   |
+|   5 | Hydrothermal Venture    | [day_05.ex][d05] |   🟢   |   🟢   |
+|   6 | Lanternfish             | [day_06.ex][d06] |   🟢   |   🟢   |
+|   7 | The Treachery of Whales | [day_07.ex][d07] |   🟢   |   🟢   |
+|   8 | ...                     |                  |        |        |
 
 ### Verdict
 
@@ -87,20 +88,22 @@ Estimated total run time: 1.40 min
 
 ### Results
 
-| Day | Part |     IPS |   average | deviation |    median |    99th % |
-| --: | ---: | ------: | --------: | --------: | --------: | --------: |
-|   1 |    1 |  1.15 K |    870 μs |    ±17.6% |    850 μs |   1460 μs |
-|     |    2 |  1.10 K |    910 μs |    ±7.23% |    890 μs |   1230 μs |
-|   2 |    1 |  2.41 K |    410 μs |    ±8.89% |    410 μs |    500 μs |
-|     |    2 |  2.35 K |    430 μs |    ±7.33% |    420 μs |    500 μs |
-|   3 |    1 |     420 |   2.39 ms |    ±15.2% |   2.38 ms |   3.05 ms |
-|     |    2 |     330 |   3.01 ms |    ±7.80% |   2.92 ms |   3.85 ms |
-|   4 |    1 |     200 |   4.97 ms |    ±13.4% |   4.69 ms |   6.63 ms |
-|     |    2 |    61.2 |  16.33 ms |    ±1.83% |  16.23 ms |  17.79 ms |
-|   5 |    1 |    12.7 |  78.80 ms |    ±3.27% |  79.03 ms |  85.07 ms |
-|     |    2 |    6.59 | 151.67 ms |    ±4.60% | 151.54 ms | 169.70 ms |
-|   6 |    1 | 25.76 K |   38.8 μs |    ±15.1% |   38.2 μs |   50.1 μs |
-|     |    2 | 16.93 K |   59.1 μs |    ±11.8% |   58.4 μs |   76.5 μs |
+| Day | Part |    IPS |   average | deviation |    median |    99th % |
+| --: | ---: | -----: | --------: | --------: | --------: | --------: |
+|   1 |    1 | 1.15 K |    870 μs |    ±17.6% |    850 μs |   1460 μs |
+|     |    2 | 1.10 K |    910 μs |    ±7.23% |    890 μs |   1230 μs |
+|   2 |    1 | 2.41 K |    410 μs |    ±8.89% |    410 μs |    500 μs |
+|     |    2 | 2.35 K |    430 μs |    ±7.33% |    420 μs |    500 μs |
+|   3 |    1 |    420 |   2.39 ms |    ±15.2% |   2.38 ms |   3.05 ms |
+|     |    2 |    330 |   3.01 ms |    ±7.80% |   2.92 ms |   3.85 ms |
+|   4 |    1 |    200 |   4.97 ms |    ±13.4% |   4.69 ms |   6.63 ms |
+|     |    2 |   61.2 |  16.33 ms |    ±1.83% |  16.23 ms |  17.79 ms |
+|   5 |    1 |   12.7 |  78.80 ms |    ±3.27% |  79.03 ms |  85.07 ms |
+|     |    2 |   6.59 | 151.67 ms |    ±4.60% | 151.54 ms | 169.70 ms |
+|   6 |    1 | 25.8 K |   38.8 μs |    ±15.1% |   38.2 μs |   50.1 μs |
+|     |    2 | 16.9 K |   59.1 μs |    ±11.8% |   58.4 μs |   76.5 μs |
+|   7 |    1 |   37.3 |   26.8 ms |    ±3.06% |   26.5 ms |   31.0 ms |
+|     |    2 |   29.0 |   34.5 ms |    ±3.20% |  34.10 ms |   39.6 ms |
 
 ## Acknowledgments
 
@@ -122,3 +125,5 @@ Distributed under the MIT Licence. See [LICENCE](LICENCE) for more information.
 [d04]: lib/advent_of_code/day_04.ex
 [d05]: lib/advent_of_code/day_05.ex
 [d06]: lib/advent_of_code/day_06.ex
+[d07]: lib/advent_of_code/day_07.ex
+
