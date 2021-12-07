@@ -18,10 +18,8 @@ defmodule Mix.Tasks.Bench do
   end
 
   defp generate_case({day, part}) do
-    day_padded = String.pad_leading(Integer.to_string(day), 2, "0")
-
     {
-      "Day #{day_padded}, Part #{part}",
+      "Day #{pad_day(day)}, Part #{part}",
       {get_solver(day, part), before_scenario: fn _ -> read_data(day) |> Enum.to_list() end}
     }
   end
