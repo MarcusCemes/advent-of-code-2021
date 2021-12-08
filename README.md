@@ -6,17 +6,17 @@ These are my Elixir solutions for the [Advent of Code 2021][advent-of-code] as a
 
 Feel free to take a look!
 
-| Day | Name                    | Source           | Part 1 | Part 2 |
-| --: | ----------------------- | ---------------- | :----: | :----: |
-|   1 | Sonar Sweep             | [day_01.ex][d01] |   🟢   |   🟢   |
-|   2 | Dive!                   | [day_02.ex][d02] |   🟢   |   🟢   |
-|   3 | Binary Diagnostic       | [day_03.ex][d03] |   🟢   |   🟢   |
-|   4 | Giant Squid             | [day_04.ex][d04] |   🟢   |   🟢   |
-|   5 | Hydrothermal Venture    | [day_05.ex][d05] |   🟢   |   🟢   |
-|   6 | Lanternfish             | [day_06.ex][d06] |   🟢   |   🟢   |
-|   7 | The Treachery of Whales | [day_07.ex][d07] |   🟢   |   🟢   |
-|   8 | Seven Segment Search    | [day_08.ex][d08] |   🟢   |   🟢   |
-|   9 | ...                     |                  |        |        |
+|      Day | Name                    | Source           | Part 1 | Part 2 |
+| -------: | ----------------------- | ---------------- | :----: | :----: |
+| [1][p01] | Sonar Sweep             | [day_01.ex][s01] |   🟢   |   🟢   |
+| [2][p02] | Dive!                   | [day_02.ex][s02] |   🟢   |   🟢   |
+| [3][p03] | Binary Diagnostic       | [day_03.ex][s03] |   🟢   |   🟢   |
+| [4][p04] | Giant Squid             | [day_04.ex][s04] |   🟢   |   🟢   |
+| [5][p05] | Hydrothermal Venture    | [day_05.ex][s05] |   🟢   |   🟢   |
+| [6][p06] | Lanternfish             | [day_06.ex][s06] |   🟢   |   🟢   |
+| [7][p07] | The Treachery of Whales | [day_07.ex][s07] |   🟢   |   🟢   |
+| [8][p08] | Seven Segment Search    | [day_08.ex][s08] |   🟢   |   🟢   |
+|        9 | ...                     |                  |        |        |
 
 ### Verdict
 
@@ -122,11 +122,19 @@ Distributed under the MIT Licence. See [LICENCE](LICENCE) for more information.
 [advent-of-code]: https://adventofcode.com/
 [elixir]: https://elixir-lang.org/
 [template]: https://github.com/mhanberg/advent-of-code-elixir-starterF
-[d01]: lib/advent_of_code/day_01.ex
-[d02]: lib/advent_of_code/day_02.ex
-[d03]: lib/advent_of_code/day_03.ex
-[d04]: lib/advent_of_code/day_04.ex
-[d05]: lib/advent_of_code/day_05.ex
-[d06]: lib/advent_of_code/day_06.ex
-[d07]: lib/advent_of_code/day_07.ex
-[d08]: lib/advent_of_code/day_08.ex
+[p01]: https://adventofcode.com/2021/day/1
+[p02]: https://adventofcode.com/2021/day/2
+[p03]: https://adventofcode.com/2021/day/3
+[p04]: https://adventofcode.com/2021/day/4
+[p05]: https://adventofcode.com/2021/day/5
+[p06]: https://adventofcode.com/2021/day/6
+[p07]: https://adventofcode.com/2021/day/7
+[p08]: https://adventofcode.com/2021/day/8
+[s01]: lib/advent_of_code/day_01.ex
+[s02]: lib/advent_of_code/day_02.ex
+[s03]: lib/advent_of_code/day_03.ex
+[s04]: lib/advent_of_code/day_04.ex
+[s05]: lib/advent_of_code/day_05.ex
+[s06]: lib/advent_of_code/day_06.ex
+[s07]: lib/advent_of_code/day_07.ex
+[s08]: lib/advent_of_code/day_08.ex
