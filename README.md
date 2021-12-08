@@ -1,6 +1,6 @@
 # 🎄 Advent Of Code 2021
 
-![elixir logo][elixir-badge] ![test status][test-badge] ![last commit][commit-badge]
+![elixir logo][elixir-badge] ![test status][test-badge] ![last commit][commit-badge] ![solutions](https://img.shields.io/badge/solutions-16/16-brightgreen?logo=star&style=for-the-badge)
 
 These are my Elixir solutions for the [Advent of Code 2021][advent-of-code] as a means to start learning the language. These are not the cleanest nor the most optimal solutions.
 
@@ -8,51 +8,65 @@ Feel free to take a look!
 
 |      Day | Name                    | Source           | Part 1 | Part 2 |
 | -------: | ----------------------- | ---------------- | :----: | :----: |
-| [1][p01] | Sonar Sweep             | [day_01.ex][s01] |   🟢   |   🟢   |
-| [2][p02] | Dive!                   | [day_02.ex][s02] |   🟢   |   🟢   |
-| [3][p03] | Binary Diagnostic       | [day_03.ex][s03] |   🟢   |   🟢   |
-| [4][p04] | Giant Squid             | [day_04.ex][s04] |   🟢   |   🟢   |
-| [5][p05] | Hydrothermal Venture    | [day_05.ex][s05] |   🟢   |   🟢   |
-| [6][p06] | Lanternfish             | [day_06.ex][s06] |   🟢   |   🟢   |
-| [7][p07] | The Treachery of Whales | [day_07.ex][s07] |   🟢   |   🟢   |
-| [8][p08] | Seven Segment Search    | [day_08.ex][s08] |   🟢   |   🟢   |
+| [1][p01] | Sonar Sweep             | [day_01.ex][s01] |   ⭐   |   ⭐   |
+| [2][p02] | Dive!                   | [day_02.ex][s02] |   ⭐   |   ⭐   |
+| [3][p03] | Binary Diagnostic       | [day_03.ex][s03] |   ⭐   |   ⭐   |
+| [4][p04] | Giant Squid             | [day_04.ex][s04] |   ⭐   |   ⭐   |
+| [5][p05] | Hydrothermal Venture    | [day_05.ex][s05] |   ⭐   |   ⭐   |
+| [6][p06] | Lanternfish             | [day_06.ex][s06] |   ⭐   |   ⭐   |
+| [7][p07] | The Treachery of Whales | [day_07.ex][s07] |   ⭐   |   ⭐   |
+| [8][p08] | Seven Segment Search    | [day_08.ex][s08] |   ⭐   |   ⭐   |
 |        9 | ...                     |                  |        |        |
+
+**Key**: ⭐ Completed, 🎁 In progress, 😔 Gave up
 
 ### Verdict
 
 > 🚀 Elixir is amazing.
 
-It takes a few days to understand how to use pattern matching more effectively and how not to create deeply nested anonymous functions, but the language is faster than I expected, and really a pleasure to write in.
+It takes a few days to learn how to leverage the power of pattern matching more effectively and how to create more descriptive code without confusing deeply nested anonymous functions and pipe operators. The language is faster than I expected and generally a pleasure to use.
 
-Pattern matching and the pipe operator allow you to compose complex chains of reusable logic that are easy to inspect and map out in your head. For most data manipulation concerns, there's a function hidden somewhere within the standard library that does just about anything you need it to do.
+Solutions are (generally) shorter and more readable than in other more imperative languages, at the cost of execution speed perhaps. The standard library is amazing, with a function hidden somewhere for just about any purpose that AoC could require.
 
 The language server is not quite the same standard as you might expect with more mainstream languages, it can be a little tricky to track down type errors with Dialyzer, it usually just tells you "something is wrong somewhere" by complaining about "no local returns".
+
+> _I have spoken_ -- Kuiil
 
 ## Installation
 
 Get a copy of [Elixir][elixir], it will also require Erlang. Then clone this repository and run `mix deps.get`.
 
-## Let's run!
+## Running
 
-To solve all days at once, run:
+You can run the solutions for all days at once, it shouldn't take more than a second or two:
 
 ```bash
 $ mix solve
 ```
 
-Each problem is run inside it's own Task, which Erlang will try its best to map to an available CPU core. It shouldn't take more than a few milliseconds.
+When running for the first time, the project will be compiled automatically.
 
-## Sample testing
+Each problem is run as a new task, which should in theory be able to run in parallel across your CPU cores.
 
-Each problem has its own test case based on the provided sample. Run them like so:
+## Tests
+
+Solutions are designed with a variant of the TDD (_test-driven development_) style. A test is made for every (day,part) solution, with the sample problem data and solution provided in the breakdown of of the day's problem.
+
+Once the solution ensures a passing test for the sample data, in 99% of cases the solution to the personalised dataset will also be correct (this has only failed me once!).
+
+You can run all tests with:
 
 ```bash
 $ mix test
 ```
 
-## Downloading problem data
+## Data download helper
 
-There's a handy little `download_data.sh` script that downloads your own problem data into the `data` directory. Make sure to provide your session key under `ADVENT_OF_CODE_SESSION_KEY`.
+There's a handy little `download_data.sh` script that downloads your personalised problem dataset into the `data` directory. Make sure to provide your session key under `ADVENT_OF_CODE_SESSION_KEY`. The sample problem must be created manually.
+
+```bash
+$ ./download_data.sh 1
+```
 
 ## Benchmarks
 
@@ -121,7 +135,7 @@ Distributed under the MIT Licence. See [LICENCE](LICENCE) for more information.
 [commit-badge]: https://img.shields.io/github/last-commit/MarcusCemes/advent-of-code-2021?style=for-the-badge
 [advent-of-code]: https://adventofcode.com/
 [elixir]: https://elixir-lang.org/
-[template]: https://github.com/mhanberg/advent-of-code-elixir-starterF
+[template]: https://github.com/mhanberg/advent-of-code-elixir-starter
 [p01]: https://adventofcode.com/2021/day/1
 [p02]: https://adventofcode.com/2021/day/2
 [p03]: https://adventofcode.com/2021/day/3
