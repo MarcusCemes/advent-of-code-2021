@@ -7,7 +7,7 @@ defmodule Mix.Tasks.Bench do
 
   def run(args) do
     for(
-      day <- 1..7,
+      day <- 1..25,
       part <- 1..2,
       do: {day, part}
     )
