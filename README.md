@@ -1,6 +1,6 @@
 # 🎄 Advent Of Code 2021
 
-![elixir logo][elixir-badge] ![test status][test-badge] ![last commit][commit-badge] ![solutions](https://img.shields.io/badge/solutions-16/16-brightgreen?logo=star&style=for-the-badge)
+![elixir logo][elixir-badge] ![test status][test-badge] ![last commit][commit-badge] ![solutions](https://img.shields.io/badge/solutions-18/18-brightgreen?logo=star&style=for-the-badge)
 
 These are my Elixir solutions for the [Advent of Code 2021][advent-of-code] as a means to start learning the language. These are not the cleanest nor the most optimal solutions.
 
@@ -16,7 +16,8 @@ Feel free to take a look!
 | [6][p06] | Lanternfish             | [day_06.ex][s06] |   ⭐   |   ⭐   |
 | [7][p07] | The Treachery of Whales | [day_07.ex][s07] |   ⭐   |   ⭐   |
 | [8][p08] | Seven Segment Search    | [day_08.ex][s08] |   ⭐   |   ⭐   |
-|        9 | ...                     |                  |        |        |
+| [9][p09] | Smoke Basin             | [day_09.ex][s09] |   ⭐   |   ⭐   |
+|       10 | ...                     |                  |        |        |
 
 **Key**: ⭐ Completed, 🎁 In progress, 😔 Gave up
 
@@ -121,6 +122,8 @@ Estimated total run time: 1.40 min
 |     |    2 |  29.0 |   34.5 ms |    ±3.20% |  34.10 ms |   39.6 ms |
 |   8 |    1 |  1800 |    554 μs |    ±12.2% |    547 μs |    749 μs |
 |     |    2 |   109 |   9.14 ms |    ±4.47% |   9.05 ms |   11.4 ms |
+|   9 |    1 |  45.7 |   31.8 ms |    ±13.3% |   21.2 ms |   29.3 ms |
+|     |    2 |  31.3 |   32.0 ms |    ±9.19% |   32.0 ms |   42.2 ms |
 
 ## Acknowledgments
 
@@ -144,6 +147,7 @@ Distributed under the MIT Licence. See [LICENCE](LICENCE) for more information.
 [p06]: https://adventofcode.com/2021/day/6
 [p07]: https://adventofcode.com/2021/day/7
 [p08]: https://adventofcode.com/2021/day/8
+[p09]: https://adventofcode.com/2021/day/9
 [s01]: lib/advent_of_code/day_01.ex
 [s02]: lib/advent_of_code/day_02.ex
 [s03]: lib/advent_of_code/day_03.ex
@@ -152,3 +156,4 @@ Distributed under the MIT Licence. See [LICENCE](LICENCE) for more information.
 [s06]: lib/advent_of_code/day_06.ex
 [s07]: lib/advent_of_code/day_07.ex
 [s08]: lib/advent_of_code/day_08.ex
+[s09]: lib/advent_of_code/day_09.ex
