@@ -4,21 +4,23 @@ defmodule AdventOfCode.Day09 do
   @typep heightmap :: [[integer()]]
   @typep coordinates :: {integer(), integer()}
 
+  @spec part1(Stream.t(binary())) :: integer()
   def part1(args) do
     heightmap = parse_args(args)
 
     heightmap
-    |> iterate_positions()
+    |> all_coordinates()
     |> Enum.filter(&low_point?(&1, heightmap))
     |> Enum.map(&heightmap_at(&1, heightmap))
     |> Enum.map(&(&1 + 1))
     |> Enum.sum()
   end
 
+  @spec part2(Stream.t(binary())) :: integer()
   def part2(args) do
     heightmap = parse_args(args)
 
-    iterate_positions(heightmap)
+    all_coordinates(heightmap)
     |> Enum.filter(&low_point?(&1, heightmap))
     |> Enum.map(&basin_size(&1, heightmap))
     |> Enum.sort(:desc)
@@ -26,8 +28,8 @@ defmodule AdventOfCode.Day09 do
     |> Enum.product()
   end
 
-  @spec iterate_positions(heightmap()) :: [coordinates()]
-  defp iterate_positions(map) do
+  @spec all_coordinates(heightmap()) :: [coordinates()]
+  defp all_coordinates(map) do
     Enum.flat_map(Enum.with_index(map), fn {line, y} ->
       Enum.map(Enum.with_index(line), fn {_, x} ->
         {x, y}
@@ -35,50 +37,50 @@ defmodule AdventOfCode.Day09 do
     end)
   end
 
+  # Iteratively find all coordinates belonging to a basin from a starting point
   @spec basin_size(coordinates(), heightmap()) :: integer()
-  defp basin_size(coordinates, heightmap) do
-    fill_basin([coordinates], MapSet.new(), heightmap)
-  end
+  defp basin_size(coords, heightmap), do: fill_basin([coords], MapSet.new(), heightmap)
 
   @spec fill_basin([coordinates()], MapSet.t(coordinates()), heightmap()) :: integer()
   defp fill_basin([], marked, _), do: MapSet.size(marked)
 
-  defp fill_basin([coordinates | queue], marked, heightmap) do
+  defp fill_basin([coords | queue], marked, heightmap) do
     unmarked_adjacent =
-      adjacent_coordinates(coordinates)
+      adjacent_coordinates(coords)
       |> Enum.filter(&(!MapSet.member?(marked, &1)))
       |> Enum.filter(&in_basin?(heightmap_at(&1, heightmap)))
 
-    fill_basin(unmarked_adjacent ++ queue, MapSet.put(marked, coordinates), heightmap)
+    fill_basin(unmarked_adjacent ++ queue, MapSet.put(marked, coords), heightmap)
   end
 
   @spec low_point?(coordinates(), heightmap()) :: boolean()
-  defp low_point?(coordinates, heightmap) do
-    adjacent_elements(coordinates, heightmap)
-    |> Enum.map(&is_lower?(heightmap_at(coordinates, heightmap), &1))
+  defp low_point?(coords, heightmap) do
+    adjacent_heights(coords, heightmap)
+    |> Enum.map(&is_lower?(heightmap_at(coords, heightmap), &1))
     |> Enum.all?()
   end
 
-  @spec adjacent_elements(coordinates(), heightmap()) :: [integer()]
-  defp adjacent_elements(coordinates, heightmap) do
-    adjacent_coordinates(coordinates) |> Enum.map(&heightmap_at(&1, heightmap))
+  @spec adjacent_heights(coordinates(), heightmap()) :: [integer()]
+  defp adjacent_heights(coords, heightmap) do
+    adjacent_coordinates(coords) |> Enum.map(&heightmap_at(&1, heightmap))
   end
 
   @spec adjacent_coordinates(coordinates()) :: [coordinates()]
   defp adjacent_coordinates({x, y}), do: [{x, y - 1}, {x - 1, y}, {x + 1, y}, {x, y + 1}]
 
   @spec is_lower?(integer(), integer() | nil) :: boolean()
-  defp is_lower?(element, adjacent) when is_integer(adjacent), do: element < adjacent
-  defp is_lower?(_, nil), do: true
+  defp is_lower?(element, adjacent), do: adjacent == nil or element < adjacent
 
   @spec in_basin?(integer() | nil) :: boolean()
-  defp in_basin?(height), do: height < 9 and height != nil
+  defp in_basin?(height), do: height != nil and height < 9
 
+  # Retrieve the element at the specified coordinates, or return nil if out of bounds
   @spec heightmap_at(coordinates(), heightmap()) :: integer() | nil
   defp heightmap_at({x, y}, _) when x == -1 or y == -1, do: nil
   defp heightmap_at({x, y}, heightmap), do: heightmap |> Enum.at(y, []) |> Enum.at(x)
 
-  @spec parse_args(Stream.t(binary())) :: [integer]
+  # Create a two-dimensional integer heightmap from the input
+  @spec parse_args(Stream.t(binary())) :: [[integer()]]
   defp parse_args(args) do
     sanitise_stream(args)
     |> Enum.map(fn line -> String.graphemes(line) |> Enum.map(&parse_int/1) end)
