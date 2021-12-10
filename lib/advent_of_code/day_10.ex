@@ -1,7 +1,7 @@
 defmodule AdventOfCode.Day10 do
   import AdventOfCode.Utils
 
-  @type grapheme :: String.grapheme()
+  @typep grapheme :: String.grapheme()
 
   @symbol_pairs [{"(", ")"}, {"[", "]"}, {"{", "}"}, {"<", ">"}]
   @syntax_scores [3, 57, 1197, 25137]
