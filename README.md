@@ -1,23 +1,24 @@
 # 🎄 Advent Of Code 2021
 
-![elixir logo][elixir-badge] ![test status][test-badge] ![last commit][commit-badge] ![solutions](https://img.shields.io/badge/solutions-18/18-brightgreen?logo=star&style=for-the-badge)
+![elixir logo][elixir-badge] ![test status][test-badge] ![last commit][commit-badge] ![solutions](https://img.shields.io/badge/solutions-20/20-brightgreen?logo=star&style=for-the-badge)
 
 These are my Elixir solutions for the [Advent of Code 2021][advent-of-code] as a means to start learning the language. These are not the cleanest nor the most optimal solutions.
 
 Feel free to take a look!
 
-|      Day | Name                    | Source           | Part 1 | Part 2 |
-| -------: | ----------------------- | ---------------- | :----: | :----: |
-| [1][p01] | Sonar Sweep             | [day_01.ex][s01] |   ⭐   |   ⭐   |
-| [2][p02] | Dive!                   | [day_02.ex][s02] |   ⭐   |   ⭐   |
-| [3][p03] | Binary Diagnostic       | [day_03.ex][s03] |   ⭐   |   ⭐   |
-| [4][p04] | Giant Squid             | [day_04.ex][s04] |   ⭐   |   ⭐   |
-| [5][p05] | Hydrothermal Venture    | [day_05.ex][s05] |   ⭐   |   ⭐   |
-| [6][p06] | Lanternfish             | [day_06.ex][s06] |   ⭐   |   ⭐   |
-| [7][p07] | The Treachery of Whales | [day_07.ex][s07] |   ⭐   |   ⭐   |
-| [8][p08] | Seven Segment Search    | [day_08.ex][s08] |   ⭐   |   ⭐   |
-| [9][p09] | Smoke Basin             | [day_09.ex][s09] |   ⭐   |   ⭐   |
-|       10 | ...                     |                  |        |        |
+|       Day | Name                    | Source           | Part 1 | Part 2 |
+| --------: | ----------------------- | ---------------- | :----: | :----: |
+|  [1][p01] | Sonar Sweep             | [day_01.ex][s01] |   ⭐   |   ⭐   |
+|  [2][p02] | Dive!                   | [day_02.ex][s02] |   ⭐   |   ⭐   |
+|  [3][p03] | Binary Diagnostic       | [day_03.ex][s03] |   ⭐   |   ⭐   |
+|  [4][p04] | Giant Squid             | [day_04.ex][s04] |   ⭐   |   ⭐   |
+|  [5][p05] | Hydrothermal Venture    | [day_05.ex][s05] |   ⭐   |   ⭐   |
+|  [6][p06] | Lanternfish             | [day_06.ex][s06] |   ⭐   |   ⭐   |
+|  [7][p07] | The Treachery of Whales | [day_07.ex][s07] |   ⭐   |   ⭐   |
+|  [8][p08] | Seven Segment Search    | [day_08.ex][s08] |   ⭐   |   ⭐   |
+|  [9][p09] | Smoke Basin             | [day_09.ex][s09] |   ⭐   |   ⭐   |
+| [10][p10] | Syntax Scoring          | [day_10.ex][s10] |   ⭐   |   ⭐   |
+|        11 | ...                     |                  |        |        |
 
 **Key**: ⭐ Completed, 🎁 In progress, 😔 Gave up
 
@@ -99,7 +100,6 @@ time: 5 s
 memory time: 0 ns
 parallel: 1
 inputs: none specified
-Estimated total run time: 1.40 min
 ```
 
 ### Results
@@ -124,6 +124,8 @@ Estimated total run time: 1.40 min
 |     |    2 |   109 |   9.14 ms |    ±4.47% |   9.05 ms |   11.4 ms |
 |   9 |    1 |  45.7 |   31.8 ms |    ±13.3% |   21.2 ms |   29.3 ms |
 |     |    2 |  31.3 |   32.0 ms |    ±9.19% |   32.0 ms |   42.2 ms |
+|  10 |    1 |   659 |   1.52 ms |    ±7.46% |   1.50 ms |   2.04 ms |
+|     |    2 |   650 |   1.54 ms |    ±9.85% |   1.51 ms |   1.93 ms |
 
 ## Acknowledgments
 
@@ -148,6 +150,7 @@ Distributed under the MIT Licence. See [LICENCE](LICENCE) for more information.
 [p07]: https://adventofcode.com/2021/day/7
 [p08]: https://adventofcode.com/2021/day/8
 [p09]: https://adventofcode.com/2021/day/9
+[p10]: https://adventofcode.com/2021/day/10
 [s01]: lib/advent_of_code/day_01.ex
 [s02]: lib/advent_of_code/day_02.ex
 [s03]: lib/advent_of_code/day_03.ex
@@ -157,3 +160,4 @@ Distributed under the MIT Licence. See [LICENCE](LICENCE) for more information.
 [s07]: lib/advent_of_code/day_07.ex
 [s08]: lib/advent_of_code/day_08.ex
 [s09]: lib/advent_of_code/day_09.ex
+[s10]: lib/advent_of_code/day_10.ex
