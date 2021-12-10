@@ -4,28 +4,24 @@ defmodule AdventOfCode.Day10 do
   @type grapheme :: String.grapheme()
 
   @symbol_pairs [{"(", ")"}, {"[", "]"}, {"{", "}"}, {"<", ">"}]
-  @syntax_scores [{")", 3}, {"]", 57}, {"}", 1197}, {">", 25137}]
-  @autocomplete_scores [{"(", 1}, {"[", 2}, {"{", 3}, {"<", 4}]
+  @syntax_scores [3, 57, 1197, 25137]
+  @autocomplete_scores [1, 2, 3, 4]
 
   @spec part1(Stream.t(binary())) :: integer()
   def part1(args) do
     parse_args(args)
-    |> Stream.map(&parse_line/1)
-    |> Stream.flat_map(fn {status, symbol} -> if status === :err, do: [symbol], else: [] end)
-    |> Stream.map(&find_score(&1, @syntax_scores))
+    |> Enum.flat_map(fn {a, b} -> if a === :err, do: [b], else: [] end)
+    |> Enum.map(&Enum.find_index(@symbol_pairs, fn {_, b} -> b == &1 end))
+    |> Enum.map(&Enum.at(@syntax_scores, &1))
     |> Enum.sum()
   end
 
   @spec part2(Stream.t(binary())) :: integer()
   def part2(args) do
     parse_args(args)
-    |> Stream.map(&parse_line/1)
-    |> Stream.flat_map(fn {status, symbols} -> if status === :ok, do: [symbols], else: [] end)
-    |> Stream.map(fn symbols ->
-      Enum.reduce(symbols, 0, &(5 * &2 + find_score(&1, @autocomplete_scores)))
-    end)
-    |> Enum.sort()
-    |> middle_score()
+    |> Enum.flat_map(fn {a, b} -> if a === :ok, do: [b], else: [] end)
+    |> Enum.map(&calculate_autocomplete_score/1)
+    |> median()
   end
 
   @spec parse_line([grapheme()], [grapheme()]) :: {:ok, [grapheme()]} | {:err, grapheme()}
@@ -44,20 +40,21 @@ defmodule AdventOfCode.Day10 do
     end
   end
 
-  @spec find_score(grapheme(), [{grapheme(), integer()}]) :: integer()
-  defp find_score(symbol, scores),
-    do: Enum.find_value(scores, nil, fn {a, b} -> if a == symbol, do: b, else: nil end)
+  @spec calculate_autocomplete_score([grapheme()]) :: integer()
+  defp calculate_autocomplete_score(symbols) do
+    Enum.map(symbols, &Enum.find_index(@symbol_pairs, fn {a, _} -> a == &1 end))
+    |> Enum.reduce(0, &(5 * &2 + Enum.at(@autocomplete_scores, &1)))
+  end
 
   @spec symbol_pair?(grapheme(), grapheme()) :: boolean()
   @spec opening_symbol?(grapheme()) :: boolean()
   defp symbol_pair?(open, close), do: Enum.member?(@symbol_pairs, {open, close})
   defp opening_symbol?(symbol), do: Enum.member?(Enum.map(@symbol_pairs, &elem(&1, 0)), symbol)
 
-  @spec middle_score([integer()]) :: integer()
-  defp middle_score(scores), do: Enum.at(scores, length(scores) |> div(2))
+  @spec median([integer()]) :: integer()
+  defp median(scores), do: Enum.sort(scores) |> Enum.at(length(scores) |> div(2))
 
-  @spec parse_args(Stream.t(binary())) :: Stream.t([grapheme()])
-  defp parse_args(args) do
-    sanitise_stream(args) |> Stream.map(&String.graphemes/1)
-  end
+  @spec parse_args(Stream.t(binary())) :: [{:ok, [grapheme()]} | {:err, grapheme()}]
+  defp parse_args(args),
+    do: sanitise_stream(args) |> Enum.map(&(String.graphemes(&1) |> parse_line()))
 end
