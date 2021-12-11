@@ -1,6 +1,6 @@
 # 🎄 Advent Of Code 2021
 
-![elixir logo][elixir-badge] ![test status][test-badge] ![last commit][commit-badge] ![solutions](https://img.shields.io/badge/solutions-20/20-brightgreen?logo=star&style=for-the-badge)
+![elixir logo][elixir-badge] ![test status][test-badge] ![last commit][commit-badge] ![solutions](https://img.shields.io/badge/solutions-22/22-brightgreen?logo=star&style=for-the-badge)
 
 These are my Elixir solutions for the [Advent of Code 2021][advent-of-code] as a means to start learning the language. These are not the cleanest nor the most optimal solutions.
 
@@ -18,7 +18,8 @@ Feel free to take a look!
 |  [8][p08] | Seven Segment Search    | [day_08.ex][s08] |   ⭐   |   ⭐   |
 |  [9][p09] | Smoke Basin             | [day_09.ex][s09] |   ⭐   |   ⭐   |
 | [10][p10] | Syntax Scoring          | [day_10.ex][s10] |   ⭐   |   ⭐   |
-|        11 | ...                     |                  |        |        |
+| [11][p11] | Dumbo Octopus           | [day_11.ex][s11] |   ⭐   |   ⭐   |
+|        12 | ...                     |                  |        |        |
 
 **Key**: ⭐ Completed, 🎁 In progress, 😔 Gave up
 
@@ -126,6 +127,8 @@ inputs: none specified
 |     |    2 |  31.3 |   32.0 ms |    ±9.19% |   32.0 ms |   42.2 ms |
 |  10 |    1 |   735 |   1.36 ms |    ±7.95% |   1.34 ms |   1.84 ms |
 |     |    2 |   700 |   1.43 ms |    ±7.84% |   1.41 ms |   1.98 ms |
+|  11 |    1 |   363 |   2.75 ms |    ±5.78% |   2.72 ms |   3.30 ms |
+|     |    2 |  65.6 |   15.3 ms |    ±4.32% |   15.2 ms |   18.7 ms |
 
 ## Acknowledgments
 
@@ -151,6 +154,7 @@ Distributed under the MIT Licence. See [LICENCE](LICENCE) for more information.
 [p08]: https://adventofcode.com/2021/day/8
 [p09]: https://adventofcode.com/2021/day/9
 [p10]: https://adventofcode.com/2021/day/10
+[p11]: https://adventofcode.com/2021/day/11
 [s01]: lib/advent_of_code/day_01.ex
 [s02]: lib/advent_of_code/day_02.ex
 [s03]: lib/advent_of_code/day_03.ex
@@ -161,3 +165,4 @@ Distributed under the MIT Licence. See [LICENCE](LICENCE) for more information.
 [s08]: lib/advent_of_code/day_08.ex
 [s09]: lib/advent_of_code/day_09.ex
 [s10]: lib/advent_of_code/day_10.ex
+[s11]: lib/advent_of_code/day_11.ex
