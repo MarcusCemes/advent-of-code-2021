@@ -20,27 +20,30 @@ defmodule AdventOfCode.Day11 do
 
   @spec until_synchronised(charge_map()) :: integer()
   defp until_synchronised(map, step \\ 0) do
-    if synchronised(map) do
-      step
-    else
-      until_synchronised(next_step(map) |> elem(1), step + 1)
-    end
+    if synchronised(map),
+      do: step,
+      else: until_synchronised(next_step(map) |> elem(1), step + 1)
   end
 
   @spec next_step(charge_map()) :: {[integer()], charge_map()}
   defp next_step(map) do
-    {map, charged} = charge_all(map)
+    {map, charged} = increment_charge(map)
     Enum.map_reduce(charged, map, &flash/2)
   end
 
-  @spec charge_all(charge_map()) :: {charge_map(), [coordinates()]}
-  defp charge_all(map) do
+  # Octopuses are all incremented during a single sweep instead of individual
+  # updates to avoid unnecessary memory allocation due to immutability
+  @spec increment_charge(charge_map()) :: {charge_map(), [coordinates()]}
+  defp increment_charge(map) do
     Enum.map_reduce(Enum.with_index(map), [], fn {line, y}, charged ->
       Enum.map_reduce(Enum.with_index(line), charged, fn {item, x}, charged ->
         if item >= 9, do: {0, [{x, y} | charged]}, else: {item + 1, charged}
       end)
     end)
   end
+
+  # flash/2 and charge/2 are not optimised for tail recursion for sake of complexity.
+  # The stack size will likely be the limiting factor for the size of the map.
 
   @spec flash(coordinates(), charge_map()) :: {integer(), charge_map()}
   defp flash(coords, map) do
