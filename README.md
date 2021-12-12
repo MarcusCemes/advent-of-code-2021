@@ -2,9 +2,11 @@
 
 ![elixir logo][elixir-badge] ![test status][test-badge] ![last commit][commit-badge] ![solutions](https://img.shields.io/badge/solutions-24/24-brightgreen?logo=star&style=for-the-badge)
 
-These are my Elixir solutions for the [Advent of Code 2021][advent-of-code] as a means to start learning the language. These are not the cleanest nor the most optimal solutions.
+Hi! These are my Elixir solutions for the [Advent of Code 2021][advent-of-code].
 
-Feel free to take a look!
+I decided to try learning a completely new language, these are the solutions I came up with!
+
+<div align="center">
 
 |       Day | Name                    | Source           | Part 1 | Part 2 |
 | --------: | ----------------------- | ---------------- | :----: | :----: |
@@ -22,9 +24,15 @@ Feel free to take a look!
 | [12][p12] | Passage Pathing         | [day_12.ex][s12] |   ⭐   |   ⭐   |
 |        13 | ...                     |                  |        |        |
 
-**Key**: ⭐ Completed, 🎁 In progress, 😔 Gave up
+**Key**: ⭐ Completed &nbsp;&nbsp; 🎁 In progress &nbsp;&nbsp; 😔 Gave up
 
-### Verdict
+</div>
+
+### Captain's log
+
+**2021-12-12**: Up until now, solutions have been solved on the day. Due to increased difficulty and the time need to develop solutions and tweak them, I will be proceeding at a more leisurely pace.
+
+## Verdict
 
 > 🚀 Elixir is amazing.
 
@@ -35,6 +43,8 @@ Solutions are (generally) shorter and more readable than in other more imperativ
 The language server is not quite the same standard as you might expect with more mainstream languages, it can be a little tricky to track down type errors with Dialyzer, it usually just tells you "something is wrong somewhere" by complaining about "no local returns".
 
 > _I have spoken_ -- Kuiil
+
+---
 
 ## Installation
 
@@ -48,15 +58,13 @@ You can run the solutions for all days at once, it shouldn't take more than a se
 $ mix solve
 ```
 
-When running for the first time, the project will be compiled automatically.
-
-Each problem is run as a new task, which should in theory be able to run in parallel across your CPU cores.
+When running for the first time, the project will be compiled automatically. Each problem is run as a new task which will distribute the workload across your available CPU cores.
 
 ## Tests
 
-Solutions are designed with a variant of the TDD (_test-driven development_) style. A test is made for every (day,part) solution, with the sample problem data and solution provided in the breakdown of of the day's problem.
+Solutions are designed with a variant of the TDD (_test-driven development_) style. In each day's breakdown of the problem, there is a provided example with the correct solution. These have been implemented as tests for each solution.
 
-Once the solution ensures a passing test for the sample data, in 99% of cases the solution to the personalised dataset will also be correct (this has only failed me once!).
+Once the solution has a passing test for the sample data, in 99% of cases the solution to the personalised dataset will also be correct (this has only failed me once!).
 
 You can run all tests with:
 
