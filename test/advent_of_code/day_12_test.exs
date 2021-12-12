@@ -2,20 +2,32 @@ defmodule AdventOfCode.Day12Test do
   use ExUnit.Case
 
   import AdventOfCode.Day12
+  import AdventOfCode.Utils
 
-  @tag :skip
-  test "part1" do
-    input = nil
+  test "part1.1" do
+    input = read_sample_data(12, 1)
     result = part1(input)
-
-    assert result
+    assert result == 10
   end
 
   @tag :skip
-  test "part2" do
-    input = nil
-    result = part2(input)
+  test "part1.2" do
+    input = read_sample_data(12, 2)
+    result = part1(input)
+    assert result == 226
+  end
 
-    assert result
+  test "part2.1" do
+    input = read_sample_data(12, 1)
+    result = part2(input)
+    assert result == 36
+  end
+
+  @tag :skip
+
+  test "part2.2" do
+    input = read_sample_data(12, 2)
+    result = part2(input)
+    assert result == 3509
   end
 end

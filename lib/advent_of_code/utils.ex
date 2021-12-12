@@ -8,11 +8,13 @@ defmodule AdventOfCode.Utils do
   @doc """
   Returns a binary stream of lines containing the sample data for a given day.
   """
-  @spec read_sample_data(integer) :: Stream.t(binary)
+  @spec read_sample_data(integer()) :: Stream.t(binary)
+  @spec read_sample_data(integer(), integer()) :: Stream.t(binary)
   def read_sample_data(problem), do: data_path(problem, :sample) |> File.stream!()
+  def read_sample_data(problem, variant), do: data_path(problem, :sample, variant) |> File.stream!()
 
   @doc """
-  Santisises a binary stream of lines, trimming them and filtering out empty lines.
+  Sanitises a binary stream of lines, trimming them and filtering out empty lines.
   """
   @spec sanitise_stream(Stream.t(binary)) :: Stream.t(binary())
   def sanitise_stream(stream) do
@@ -70,6 +72,15 @@ defmodule AdventOfCode.Utils do
         :sample -> ".sample.txt"
       end
 
+    problem_name = String.pad_leading(Integer.to_string(problem), 2, "0")
+    filename = "p#{problem_name}#{extension}"
+    Path.join("data", filename)
+  end
+
+
+  @spec data_path(integer, :sample, integer()) :: String.t()
+  defp data_path(problem, :sample, variant) do
+    extension =".sample.#{variant}.txt"
     problem_name = String.pad_leading(Integer.to_string(problem), 2, "0")
     filename = "p#{problem_name}#{extension}"
     Path.join("data", filename)
