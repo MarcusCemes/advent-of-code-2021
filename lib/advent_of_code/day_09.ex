@@ -4,7 +4,7 @@ defmodule AdventOfCode.Day09 do
   @typep heightmap :: [[integer()]]
   @typep coordinates :: {integer(), integer()}
 
-  @spec part1(Stream.t(binary())) :: integer()
+  @spec part1([binary()]) :: integer()
   def part1(args) do
     heightmap = parse_args(args)
 
@@ -16,7 +16,7 @@ defmodule AdventOfCode.Day09 do
     |> Enum.sum()
   end
 
-  @spec part2(Stream.t(binary())) :: integer()
+  @spec part2([binary()]) :: integer()
   def part2(args) do
     heightmap = parse_args(args)
 
@@ -80,9 +80,7 @@ defmodule AdventOfCode.Day09 do
   defp heightmap_at({x, y}, heightmap), do: heightmap |> Enum.at(y, []) |> Enum.at(x)
 
   # Create a two-dimensional integer heightmap from the input
-  @spec parse_args(Stream.t(binary())) :: [[integer()]]
-  defp parse_args(args) do
-    sanitise_stream(args)
-    |> Enum.map(fn line -> String.graphemes(line) |> Enum.map(&parse_int/1) end)
-  end
+  @spec parse_args([binary()]) :: [[integer()]]
+  defp parse_args(args), do: Enum.map(args, &parse_line/1)
+  defp parse_line(line), do: String.graphemes(line) |> Enum.map(&parse_int!/1)
 end

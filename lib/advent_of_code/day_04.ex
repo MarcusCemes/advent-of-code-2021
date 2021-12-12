@@ -3,7 +3,7 @@ defmodule AdventOfCode.Day04 do
 
   @type board :: [[integer]]
 
-  @spec part1(Stream.t(binary)) :: integer
+  @spec part1([binary()]) :: integer()
   def part1(args) do
     {sequence, boards} = parse_args(args)
     {winning_board, numbers} = find_winning_board([], sequence, boards)
@@ -22,6 +22,7 @@ defmodule AdventOfCode.Day04 do
     end
   end
 
+  @spec part2([binary()]) :: integer()
   def part2(args) do
     {sequence, boards} = parse_args(args)
     {losing_board, numbers} = find_losing_board([], sequence, boards)
@@ -56,22 +57,19 @@ defmodule AdventOfCode.Day04 do
     Enum.filter(board, &(!Enum.member?(numbers, &1)))
   end
 
-  @spec parse_args(Stream.t(binary)) :: {[integer], [board]}
+  @spec parse_args([binary()]) :: {[integer()], [board()]}
   defp parse_args(args) do
     [[raw_sequence] | raw_boards] =
-      args
-      |> Stream.map(&String.trim/1)
-      |> Stream.chunk_by(&(&1 == ""))
-      |> Stream.filter(&(&1 !== [""]))
-      |> Enum.to_list()
+      Enum.map(args, &String.trim/1)
+      |> Enum.chunk_by(&(&1 == ""))
+      |> Enum.filter(&(&1 !== [""]))
 
-    sequence = raw_sequence |> String.split(",") |> Enum.map(&parse_int/1)
+    sequence = String.split(raw_sequence, ",") |> Enum.map(&parse_int!/1)
     boards = raw_boards |> Enum.map(&parse_board_numbers/1)
     {sequence, boards}
   end
 
   @spec parse_board_numbers([String.t()]) :: [integer]
-  defp parse_board_numbers(rows) do
-    rows |> Enum.join(" ") |> String.split() |> Enum.map(&parse_int/1)
-  end
+  defp parse_board_numbers(rows),
+    do: Enum.join(rows, " ") |> String.split() |> Enum.map(&parse_int!/1)
 end

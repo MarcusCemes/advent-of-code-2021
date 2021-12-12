@@ -5,8 +5,8 @@ defmodule AdventOfCode.Day11 do
   @typep coordinates() :: {integer(), integer()}
   @typep map_with_coords :: {int_map(), [coordinates()]}
 
-  @spec part1(Stream.t(binary)) :: integer()
-  @spec part2(Stream.t(binary)) :: integer()
+  @spec part1([binary()]) :: integer()
+  @spec part2([binary()]) :: integer()
   def part1(args), do: parse_args(args) |> count_flashes(100) |> elem(1)
   def part2(args), do: parse_args(args) |> until_synchronised()
 
@@ -75,7 +75,7 @@ defmodule AdventOfCode.Day11 do
     Enum.all?(map, fn line -> Enum.all?(line, &(&1 == target)) end)
   end
 
-  @spec parse_args(Stream.t(binary)) :: [[integer()]]
+  @spec parse_args([binary]) :: [[integer()]]
   defp parse_args(args), do: Enum.map(args, &parse_line/1)
-  defp parse_line(line), do: String.trim(line) |> String.graphemes() |> Enum.map(&parse_int/1)
+  defp parse_line(line), do: String.graphemes(line) |> Enum.map(&parse_int!/1)
 end

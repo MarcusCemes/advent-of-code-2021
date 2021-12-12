@@ -15,7 +15,7 @@ defmodule Mix.Tasks.Profile do
     [day, part] =
       Regex.run(~r/^(\d+)\.(\d)$/, problem)
       |> Enum.drop(1)
-      |> Enum.map(&parse_int/1)
+      |> Enum.map(&parse_int!/1)
 
     input = read_data(day)
     solver = get_solver(day, part)

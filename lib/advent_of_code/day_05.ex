@@ -5,44 +5,40 @@ defmodule AdventOfCode.Day05 do
   @type vent :: {coordinate(), coordinate()}
   @type heatmap :: %{required(coordinate()) => integer()}
 
-  @spec part1(Stream.t(binary())) :: integer()
+  @spec part1([binary()]) :: integer()
   def part1(args) do
     parse_args(args)
-    |> number_intersections(:filter)
+    |> number_intersections(:filtered)
   end
 
-  @spec part2(Stream.t(binary())) :: integer()
+  @spec part2([binary()]) :: integer()
   def part2(args) do
     parse_args(args)
-    |> number_intersections(:dont_filter)
+    |> number_intersections(:unfiltered)
   end
 
-  @spec number_intersections(Stream.t(vent()), :filter | :dont_filter) :: integer()
+  @spec number_intersections([vent()], :filtered | :unfiltered) :: integer()
   defp number_intersections(vents, should_filter) do
-    vents
-    |> Enum.filter(
-      case should_filter do
-        :filter -> &hor_or_vert?/1
-        :dont_filter -> fn _ -> true end
-      end
-    )
+    case should_filter do
+      :filtered -> Enum.filter(vents, &hor_or_vert?/1)
+      :unfiltered -> vents
+    end
     |> generate_heatmap()
     |> Map.values()
     |> Enum.filter(&(&1 >= 2))
     |> Enum.count()
   end
 
-  @spec generate_heatmap(Stream.t(vent)) :: heatmap
+  @spec generate_heatmap([vent()]) :: heatmap()
   defp generate_heatmap(vents) do
     Enum.reduce(vents, %{}, fn vent, acc ->
       Map.merge(acc, vent_heatmap(vent), fn _k, v1, v2 -> v1 + v2 end)
     end)
   end
 
-  @spec vent_heatmap(vent) :: heatmap
+  @spec vent_heatmap(vent()) :: heatmap()
   defp vent_heatmap(vent) do
-    vent
-    |> vent_coverage()
+    vent_coverage(vent)
     |> Enum.reduce(%{}, fn coordinate, acc ->
       Map.update(acc, coordinate, 1, &(&1 + 1))
     end)
@@ -67,27 +63,21 @@ defmodule AdventOfCode.Day05 do
     x1 == x2 || y1 == y2
   end
 
-  @spec parse_args(Stream.t(binary())) :: Stream.t(vent())
-  defp parse_args(args) do
-    args
-    |> sanitise_stream()
-    |> Stream.map(&parse_line/1)
-  end
+  @spec parse_args([binary()]) :: [vent()]
+  defp parse_args(args), do: Enum.map(args, &parse_line/1)
 
   @spec parse_line(binary()) :: {coordinate(), coordinate()}
   defp parse_line(line) do
-    line
-    |> String.split(" -> ")
+    String.split(line, " -> ")
     |> Enum.map(&parse_coordinate/1)
-    |> Kernel.then(fn [s, e] -> {s, e} end)
+    |> Kernel.then(&List.to_tuple/1)
   end
 
   @spec parse_coordinate(binary()) :: coordinate()
-
   defp parse_coordinate(coordinate) do
     coordinate
     |> String.split(",")
-    |> Enum.map(&parse_int/1)
-    |> Kernel.then(fn [x, y] -> {x, y} end)
+    |> Enum.map(&parse_int!/1)
+    |> Kernel.then(&List.to_tuple/1)
   end
 end

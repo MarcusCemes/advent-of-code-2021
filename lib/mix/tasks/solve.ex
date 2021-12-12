@@ -9,35 +9,36 @@ defmodule Mix.Tasks.Solve do
     IO.puts("\n|   Day   |           Part 1 |           Part 2 |")
     IO.puts("| ------- | ---------------- | ---------------- |")
 
-    Task.async_stream(1..25, &run_day/1)
-    |> Stream.map(&format_day/1)
-    |> Stream.filter(& &1)
+    1..25
+    |> Task.async_stream(&solve_day/1)
+    |> Stream.flat_map(&format_day/1)
     |> Stream.each(&IO.puts/1)
     |> Stream.run()
 
     IO.puts("")
   end
 
-  defp run_day(day) do
-    input = read_data(day)
-
-    [r1, r2] =
-      Task.async_stream(1..2, fn part -> get_solver(day, part).(input) end) |> Enum.to_list()
-
-    {day, r1, r2}
+  @spec solve_day(integer()) :: {integer(), integer() | nil, integer() | nil}
+  defp solve_day(day) do
+    try do
+      input = read_data(day)
+      [r1, r2] = 1..2 |> Enum.map(&get_solver(day, &1).(input))
+      {day, r1, r2}
+    rescue
+      File.Error -> {day, nil, nil}
+    end
   end
 
-  defp format_day({:ok, {_, {:ok, nil}, {:ok, nil}}}), do: nil
+  @spec format_day({:ok | :err, {integer(), integer() | nil, integer() | nil}}) :: [String.t()]
+  defp format_day({:ok, {_, nil, nil}}), do: []
 
-  defp format_day({:ok, {d, r1, r2}}) do
-    "|   #{pad_day(d, " ")}    | #{format_part(r1)} | #{format_part(r2)} |"
-  end
+  defp format_day({:ok, {day, r1, r2}}),
+    do: ["|   #{pad_day(day, " ")}    | #{format_part(r1)} | #{format_part(r2)} |"]
 
-  defp format_day({:err, _}) do
-    "|   #{IO.ANSI.red()}Failed#{IO.ANSI.reset()}   |             |             |"
-  end
+  defp format_day({:err, _}),
+    do: ["|   #{IO.ANSI.red()}Failed#{IO.ANSI.reset()}   |             |             |"]
 
-  defp format_part({:ok, result}) do
+  defp format_part(result) do
     case result do
       nil -> "-"
       _ -> Integer.to_string(result)

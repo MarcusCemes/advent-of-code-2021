@@ -5,13 +5,13 @@ defmodule AdventOfCode.Day05Test do
   import AdventOfCode.Utils
 
   test "part1" do
-    input = read_sample_data(5)
+    input = read_data(5, :sample)
     result = part1(input)
     assert result == 5
   end
 
   test "part2" do
-    input = read_sample_data(5)
+    input = read_data(5, :sample)
     result = part2(input)
     assert result == 12
   end

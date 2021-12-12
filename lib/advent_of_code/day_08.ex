@@ -1,21 +1,19 @@
 defmodule AdventOfCode.Day08 do
-  import AdventOfCode.Utils
-
   @type mapping :: %{required(String.t()) => String.t()}
   @type line :: {[String.t()], [String.t()]}
 
-  @spec part1(Stream.t(binary())) :: integer()
+  @spec part1([binary()]) :: integer()
   def part1(args) do
     parse_args(args)
-    |> Stream.flat_map(&elem(&1, 1))
-    |> Stream.filter(&Enum.member?([2, 3, 4, 7], String.length(&1)))
+    |> Enum.flat_map(&elem(&1, 1))
+    |> Enum.filter(&Enum.member?([2, 3, 4, 7], String.length(&1)))
     |> Enum.count()
   end
 
-  @spec part2(Stream.t(binary())) :: integer()
+  @spec part2([binary()]) :: integer()
   def part2(args) do
     parse_args(args)
-    |> Stream.map(&decode_display/1)
+    |> Enum.map(&decode_display/1)
     |> Enum.sum()
   end
 
@@ -92,10 +90,11 @@ defmodule AdventOfCode.Day08 do
     end
   end
 
-  @spec parse_args(Stream.t(binary())) :: Stream.t(line())
-  defp parse_args(args) do
-    sanitise_stream(args)
-    |> Stream.map(fn line -> String.split(line, " | ") |> Enum.map(&String.split(&1, " ")) end)
-    |> Stream.map(&List.to_tuple/1)
+  @spec parse_args([binary()]) :: [line()]
+  defp parse_args(args), do: Enum.map(args, &parse_line/1)
+
+  @spec parse_line(binary()) :: line()
+  defp parse_line(line) do
+    String.split(line, " | ") |> Enum.map(&String.split(&1, " ")) |> List.to_tuple()
   end
 end

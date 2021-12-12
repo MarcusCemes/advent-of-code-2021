@@ -1,13 +1,11 @@
 defmodule AdventOfCode.Day10 do
-  import AdventOfCode.Utils
-
   @typep grapheme :: String.grapheme()
 
   @symbol_pairs [{"(", ")"}, {"[", "]"}, {"{", "}"}, {"<", ">"}]
   @syntax_scores [3, 57, 1197, 25137]
   @autocomplete_scores [1, 2, 3, 4]
 
-  @spec part1(Stream.t(binary())) :: integer()
+  @spec part1([binary()]) :: integer()
   def part1(args) do
     parse_args(args)
     |> Enum.flat_map(fn {a, b} -> if a === :err, do: [b], else: [] end)
@@ -16,13 +14,16 @@ defmodule AdventOfCode.Day10 do
     |> Enum.sum()
   end
 
-  @spec part2(Stream.t(binary())) :: integer()
+  @spec part2([binary()]) :: integer()
   def part2(args) do
     parse_args(args)
     |> Enum.flat_map(fn {a, b} -> if a === :ok, do: [b], else: [] end)
     |> Enum.map(&calculate_autocomplete_score/1)
     |> median()
   end
+
+  @spec parse_args([binary()]) :: [{:ok, [grapheme()]} | {:err, grapheme()}]
+  defp parse_args(args), do: Enum.map(args, &(String.graphemes(&1) |> parse_line()))
 
   @spec parse_line([grapheme()], [grapheme()]) :: {:ok, [grapheme()]} | {:err, grapheme()}
   defp parse_line(symbols, open_chunks \\ [])
@@ -53,8 +54,4 @@ defmodule AdventOfCode.Day10 do
 
   @spec median([integer()]) :: integer()
   defp median(scores), do: Enum.sort(scores) |> Enum.at(length(scores) |> div(2))
-
-  @spec parse_args(Stream.t(binary())) :: [{:ok, [grapheme()]} | {:err, grapheme()}]
-  defp parse_args(args),
-    do: sanitise_stream(args) |> Enum.map(&(String.graphemes(&1) |> parse_line()))
 end

@@ -1,14 +1,15 @@
 defmodule AdventOfCode.Day03 do
   import AdventOfCode.Utils
 
-  @spec part1(Stream.t(binary)) :: integer
+  @spec part1([binary()]) :: integer()
   def part1(args) do
-    frequencies = args |> parse_args() |> dominant_bits()
+    frequencies = parse_args(args) |> dominant_bits()
     gamma = frequencies |> Integer.undigits(2)
     epsilon = frequencies |> Enum.map(&Bitwise.bxor(&1, 1)) |> Integer.undigits(2)
     gamma * epsilon
   end
 
+  @spec part2([binary()]) :: integer()
   def part2(args) do
     data = parse_args(args) |> Enum.to_list()
     oxygen_rating = filter_rating_by(data, :oxygen)
@@ -45,9 +46,9 @@ defmodule AdventOfCode.Day03 do
     |> filter_rating_by(type, position + 1)
   end
 
-  @spec dominant_bits(Stream.t([integer])) :: [integer]
+  @spec dominant_bits([[integer]]) :: [integer]
   defp dominant_bits(entries) do
-    [first_element] = entries |> Enum.take(1)
+    [first_element] = Enum.take(entries, 1)
     init = List.duplicate(0, length(first_element))
 
     {number_ones, total} =
@@ -68,11 +69,7 @@ defmodule AdventOfCode.Day03 do
   defp bool_to_int(true), do: 1
   defp bool_to_int(false), do: 0
 
-  @spec parse_args(Stream.t(binary)) :: Stream.t([integer])
-  defp parse_args(args) do
-    args
-    |> sanitise_stream()
-    |> Stream.map(&String.graphemes/1)
-    |> Stream.map(fn digits -> Enum.map(digits, &parse_int/1) end)
-  end
+  @spec parse_args([binary()]) :: [[integer()]]
+  defp parse_args(args), do: Enum.map(args, &parse_line/1)
+  defp parse_line(line), do: String.graphemes(line) |> Enum.map(&parse_int!/1)
 end

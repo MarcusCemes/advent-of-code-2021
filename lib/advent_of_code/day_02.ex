@@ -4,7 +4,7 @@ defmodule AdventOfCode.Day02 do
   @type simple_state :: {integer(), integer()}
   @type advanced_state :: {integer(), integer(), integer()}
 
-  @spec part1(Stream.t(binary())) :: integer()
+  @spec part1([binary()]) :: integer()
   def part1(args) do
     parse_args(args)
     |> Enum.reduce({0, 0}, &simple_reducer/2)
@@ -20,7 +20,7 @@ defmodule AdventOfCode.Day02 do
     end
   end
 
-  @spec part2(Stream.t(binary())) :: integer()
+  @spec part2([binary()]) :: integer()
   def part2(args) do
     parse_args(args)
     |> Enum.reduce({0, 0, 0}, &advanced_reducer/2)
@@ -36,15 +36,12 @@ defmodule AdventOfCode.Day02 do
     end
   end
 
-  @spec parse_args(Stream.t(binary())) :: Stream.t({String.t(), integer()})
-  def parse_args(args) do
-    sanitise_stream(args)
-    |> Stream.map(&parse_instruction/1)
-  end
+  @spec parse_args([binary()]) :: [{String.t(), integer()}]
+  def parse_args(args), do: Enum.map(args, &parse_instruction/1)
 
   @spec parse_instruction(binary()) :: {String.t(), integer()}
   def parse_instruction(line) do
     [instruction, count] = String.split(line, " ")
-    {instruction, parse_int(count)}
+    {instruction, parse_int!(count)}
   end
 end

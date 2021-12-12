@@ -6,14 +6,14 @@ defmodule AdventOfCode.Day12 do
   # bi-directional graph
   @typep cave_system :: Map.t(String.t(), connections())
 
-  @spec part1(Stream.t(binary())) :: integer()
-  @spec part2(Stream.t(binary())) :: integer()
+  @spec part1([binary()]) :: integer()
+  @spec part2([binary()]) :: integer()
   def part1(args), do: parse_args(args) |> count_paths(1)
   def part2(args), do: parse_args(args) |> count_paths(2)
 
-  @spec parse_args(Stream.t(binary())) :: cave_system()
-  defp parse_args(args), do: args |> Enum.map(&parse_line/1) |> build_cave_system()
-  defp parse_line(line), do: String.trim(line) |> String.split("-") |> List.to_tuple()
+  @spec parse_args([binary()]) :: cave_system()
+  defp parse_args(args), do: Enum.map(args, &parse_line/1) |> build_cave_system()
+  defp parse_line(line), do: String.split(line, "-") |> List.to_tuple()
 
   @spec count_paths(cave_system(), integer()) :: integer()
   defp count_paths(caves, max_visits),

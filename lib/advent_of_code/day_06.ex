@@ -3,27 +3,24 @@ defmodule AdventOfCode.Day06 do
 
   @typep state :: [integer()]
 
-  @spec part1(Stream.t(binary())) :: integer()
+  @spec part1([binary()]) :: integer()
   def part1(args) do
     parse_args(args)
     |> simulate(80)
     |> Enum.sum()
   end
 
-  @spec part2(Stream.t(binary())) :: integer()
+  @spec part2([binary()]) :: integer()
   def part2(args) do
     parse_args(args)
     |> simulate(256)
     |> Enum.sum()
   end
 
-  @spec parse_args(Stream.t(binary())) :: state()
+  @spec parse_args([binary()]) :: state()
   defp parse_args(args) do
-    sanitise_stream(args)
-    |> Enum.to_list()
-    |> hd()
-    |> String.split(",")
-    |> Enum.map(&parse_int/1)
+    String.split(hd(args), ",")
+    |> Enum.map(&parse_int!/1)
     |> aggregate_population()
   end
 
