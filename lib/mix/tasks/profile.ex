@@ -5,10 +5,10 @@ defmodule Mix.Tasks.Profile do
 
   import AdventOfCode.Utils
 
-  @shortdoc "Benchmark all problems"
+  @shortdoc "Profile a problem"
 
   def run([]) do
-    IO.puts("Missing arguemnts, problem day and part required")
+    IO.puts("Missing arguments, problem day and part required")
   end
 
   def run([problem]) do

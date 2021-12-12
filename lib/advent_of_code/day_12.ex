@@ -1,60 +1,65 @@
 defmodule AdventOfCode.Day12 do
-  @typep graph_node :: String.t()
-  @typep node_pair :: {graph_node(), graph_node()}
+  @typep cave :: String.t()
+  @typep cave_pair :: {cave(), cave()}
   @typep connections :: [String.t()]
-  @typep graph :: Map.t(String.t(), connections())
+
+  # bi-directional graph
+  @typep cave_system :: Map.t(String.t(), connections())
 
   @spec part1(Stream.t(binary())) :: integer()
   @spec part2(Stream.t(binary())) :: integer()
-  def part1(args), do: parse_args(args) |> find_unique_paths(1) |> Enum.count()
-  def part2(args), do: parse_args(args) |> find_unique_paths(2) |> Enum.count()
+  def part1(args), do: parse_args(args) |> count_paths(1)
+  def part2(args), do: parse_args(args) |> count_paths(2)
 
-  @spec parse_args(Stream.t(binary())) :: graph()
-  defp parse_args(args), do: args |> Enum.map(&parse_line/1) |> build_graph()
+  @spec parse_args(Stream.t(binary())) :: cave_system()
+  defp parse_args(args), do: args |> Enum.map(&parse_line/1) |> build_cave_system()
   defp parse_line(line), do: String.trim(line) |> String.split("-") |> List.to_tuple()
+
+  @spec count_paths(cave_system(), integer()) :: integer()
+  defp count_paths(caves, max_visits),
+    do: find_paths(caves, max_visits, [{"start", {[], Map.new()}, false}], []) |> Enum.count()
 
   # == Path finding == #
 
-  # Not optimised for tail recursion, long paths may cause a stack overflow (unlikely)
-  @spec find_unique_paths(graph(), integer(), graph_node(), [graph_node()]) :: [[graph_node()]]
-  defp find_unique_paths(graph, allowed_visits, node \\ "start", visited \\ [])
-  defp find_unique_paths(_, _, "end", _), do: [["end"]]
+  # Explores potential paths recursively, optimised for tail recursion
+  @typep path :: {[cave()], Map.t(cave(), integer())}
+  @typep queue :: [{cave(), path(), boolean()}]
+  @spec find_paths(cave_system(), integer(), queue(), [[cave()]]) :: [[cave()]]
+  defp find_paths(_, _, [], paths), do: paths
 
-  defp find_unique_paths(graph, max_visits, node, visited) do
-    new_visited = [node | visited]
+  defp find_paths(caves, max_visits, [{"end", {path, _}, _} | queue], completed),
+    do: find_paths(caves, max_visits, queue, [path | completed])
 
-    # Once a small node has been visited twice, all subsequent nodes are only
-    # allowed to be visited once, otherwise we waste too much time in the caves!
-    max_visits =
-      if max_visits > 1 and exhausted_visits?(node, max_visits, new_visited),
-        do: 1,
-        else: max_visits
+  defp find_paths(caves, max_visits, [{cave, {trail, cache}, save_time} | queue], completed) do
+    path = {[cave | trail], Map.update(cache, cave, 1, &(&1 + 1))}
+    save_time = save_time || exhausted_visits?(cave, path, max_visits)
+    allowed_visits = if save_time, do: 1, else: max_visits
 
-    Map.get(graph, node)
-    |> Enum.filter(&allowed_to_visit?(&1, max_visits, visited))
-    |> Enum.flat_map(&find_unique_paths(graph, max_visits, &1, new_visited))
-    |> Enum.map(&[node | &1])
+    new_caves =
+      Map.get(caves, cave)
+      |> Enum.filter(&allowed_to_visit?(&1, path, allowed_visits))
+      |> Enum.map(&{&1, path, save_time})
+
+    find_paths(caves, max_visits, new_caves ++ queue, completed)
   end
 
-  @spec allowed_to_visit?(graph_node(), integer(), [graph_node()]) :: boolean()
-  defp allowed_to_visit?(node, max_visits, visited),
-    do: !start?(node) and !exhausted_visits?(node, max_visits, visited)
+  @spec allowed_to_visit?(cave(), path(), integer()) :: boolean()
+  defp allowed_to_visit?("start", _, _), do: false
+  defp allowed_to_visit?(cave, path, max_visits), do: !exhausted_visits?(cave, path, max_visits)
 
-  @spec exhausted_visits?(graph_node(), integer(), [graph_node()]) :: boolean()
-  defp exhausted_visits?(node, max_visits, visited),
-    do: small_node?(node) and Enum.count(visited, &(&1 == node)) >= max_visits
+  @spec exhausted_visits?(cave(), path(), integer()) :: boolean()
+  defp exhausted_visits?(cave, {_, cache}, max_visits),
+    do: small_cave?(cave) and Map.get(cache, cave, 0) >= max_visits
 
-  @spec start?(graph_node()) :: boolean()
-  @spec small_node?(graph_node()) :: boolean()
-  defp start?(node), do: node === "start"
-  defp small_node?(node), do: node == String.downcase(node)
+  @spec small_cave?(cave()) :: boolean()
+  defp small_cave?(<<first_char::utf8, _::binary>>), do: first_char in 97..122
 
   # == Graph utilities == #
 
-  @spec build_graph([node_pair]) :: graph()
-  @spec connect_nodes(graph(), node_pair) :: graph()
-  @spec add_direct(graph(), node_pair) :: graph()
-  defp build_graph(pairs), do: Enum.reduce(pairs, Map.new(), &connect_nodes(&2, &1))
-  defp connect_nodes(nodes, {a, b}), do: nodes |> add_direct({a, b}) |> add_direct({b, a})
+  @spec build_cave_system([cave_pair]) :: cave_system()
+  @spec connect_caves(cave_system(), cave_pair) :: cave_system()
+  @spec add_direct(cave_system(), cave_pair) :: cave_system()
+  defp build_cave_system(pairs), do: Enum.reduce(pairs, Map.new(), &connect_caves(&2, &1))
+  defp connect_caves(nodes, {a, b}), do: nodes |> add_direct({a, b}) |> add_direct({b, a})
   defp add_direct(nodes, {a, b}), do: Map.update(nodes, a, [b], &[b | &1])
 end

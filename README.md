@@ -20,7 +20,7 @@ Feel free to take a look!
 | [10][p10] | Syntax Scoring          | [day_10.ex][s10] |   ⭐   |   ⭐   |
 | [11][p11] | Dumbo Octopus           | [day_11.ex][s11] |   ⭐   |   ⭐   |
 | [12][p12] | Passage Pathing         | [day_12.ex][s12] |   ⭐   |   ⭐   |
-|        12 | ...                     |                  |        |        |
+|        13 | ...                     |                  |        |        |
 
 **Key**: ⭐ Completed, 🎁 In progress, 😔 Gave up
 
@@ -130,8 +130,8 @@ inputs: none specified
 |     |    2 |   700 |   1.43 ms |    ±7.84% |   1.41 ms |   1.98 ms |
 |  11 |    1 |   393 |   2.54 ms |    ±4.84% |   2.52 ms |   3.22 ms |
 |     |    2 |  78.2 |   12.8 ms |    ±4.18% |   12.7 ms |   14.5 ms |
-|  12 |    1 |  52.2 |   19.1 ms |    ±17.3% |   17.8 ms |   31.0 ms |
-|     |    2 |  1.34 |    749 ms |    ±8.10% |    730 ms |    869 ms |
+|  12 |    1 |   189 |   5.28 ms |    ±7.80% |   5.13 ms |   7.28 ms |
+|     |    2 |  5.87 |    170 ms |    ±2.57% |    169 ms |    184 ms |
 
 ## Acknowledgments
 
