@@ -1,8 +1,6 @@
 defmodule AdventOfCode.Day13 do
   import AdventOfCode.Utils
 
-  @print_solution false
-
   @typep coords :: {integer(), integer()}
   @typep fold :: {:x | :y, integer()}
 
@@ -12,12 +10,10 @@ defmodule AdventOfCode.Day13 do
     apply_fold(fold, coords) |> Enum.count()
   end
 
-  @spec part2([binary()]) :: nil
+  @spec part2([binary()]) :: String.t()
   def part2(args) do
     {coords, folds} = parse_args(args)
-    solution = Enum.reduce(folds, coords, &apply_fold/2) |> render_solution()
-    if @print_solution, do: IO.puts(solution)
-    nil
+    Enum.reduce(folds, coords, &apply_fold/2) |> render_solution()
   end
 
   @spec apply_fold(fold(), MapSet.t(coords())) :: MapSet.t(coords)
@@ -48,7 +44,7 @@ defmodule AdventOfCode.Day13 do
 
     for y <- 0..max_y do
       for x <- 0..max_x do
-        if(MapSet.member?(coords, {x, y}), do: "#", else: ".")
+        if(MapSet.member?(coords, {x, y}), do: "•", else: " ")
       end
       |> Enum.join()
     end
