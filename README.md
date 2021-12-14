@@ -23,7 +23,7 @@ I decided to try learning a completely new language, these are the solutions I c
 | [11][p11] | Dumbo Octopus           | [day_11.ex][s11] |   ⭐   |   ⭐   |
 | [12][p12] | Passage Pathing         | [day_12.ex][s12] |   ⭐   |   ⭐   |
 | [13][p13] | Transparent Origami     | [day_13.ex][s13] |   ⭐   |   ⭐   |
-|        13 | ...                     |                  |        |        |
+|        14 | ...                     |                  |        |        |
 
 **Key**: ⭐ Completed &nbsp;&nbsp; 🎁 In progress &nbsp;&nbsp; 😔 Gave up
 
