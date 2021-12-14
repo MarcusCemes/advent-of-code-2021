@@ -10,10 +10,9 @@ defmodule AdventOfCode.Day14Test do
     assert result == 1588
   end
 
-  @tag :skip
   test "part2" do
     input = read_data(14, :sample)
     result = part2(input)
-    assert result == 2188189693529
+    assert result == 2_188_189_693_529
   end
 end

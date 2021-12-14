@@ -1,6 +1,6 @@
 # 🎄 Advent Of Code 2021
 
-![elixir logo][elixir-badge] ![test status][test-badge] ![last commit][commit-badge] ![solutions](https://img.shields.io/badge/solutions-26/28-brightgreen?logo=star&style=for-the-badge)
+![elixir logo][elixir-badge] ![test status][test-badge] ![last commit][commit-badge] ![solutions](https://img.shields.io/badge/solutions-28/28-brightgreen?logo=star&style=for-the-badge)
 
 Hi! These are my Elixir solutions for the [Advent of Code 2021][advent-of-code].
 
@@ -23,7 +23,7 @@ I decided to try learning a completely new language, these are the solutions I c
 | [11][p11] | Dumbo Octopus           | [day_11.ex][s11] |   ⭐   |   ⭐   |
 | [12][p12] | Passage Pathing         | [day_12.ex][s12] |   ⭐   |   ⭐   |
 | [13][p13] | Transparent Origami     | [day_13.ex][s13] |   ⭐   |   ⭐   |
-| [14][p14] | Extended Polymerization | [day_14.ex][s14] |   ⭐   |   🎁   |
+| [14][p14] | Extended Polymerization | [day_14.ex][s14] |   ⭐   |   ⭐   |
 |        15 | ...                     |                  |        |        |
 
 **Key**: ⭐ Completed &nbsp;&nbsp; 🎁 In progress &nbsp;&nbsp; 😔 Gave up
@@ -144,7 +144,8 @@ inputs: none specified
 |     |    2 |  5.87 |    170 ms |    ±2.57% |    169 ms |    184 ms |
 |  13 |    1 |  1400 |   0.71 ms |    ±13.9% |   0.69 ms |   1.08 ms |
 |     |    2 |   810 |   1.23 ms |    ±6.76% |   1.21 ms |   1.61 ms |
-|  14 |    1 |   253 |   3.96 ms |    ±13.4% |   3.81 ms |   6.31 ms |
+|  14 |    1 |  3680 |   0.27 ms |    ±20.2% |   0.26 ms |   0.53 ms |
+|     |    2 |   840 |   1.18 ms |    ±6.74% |   1.18 ms |   1.43 ms |
 
 ## Acknowledgments
 
