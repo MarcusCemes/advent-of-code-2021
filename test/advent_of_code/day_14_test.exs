@@ -2,20 +2,18 @@ defmodule AdventOfCode.Day14Test do
   use ExUnit.Case
 
   import AdventOfCode.Day14
+  import AdventOfCode.Utils
 
-  @tag :skip
   test "part1" do
-    input = nil
+    input = read_data(14, :sample)
     result = part1(input)
-
-    assert result
+    assert result == 1588
   end
 
   @tag :skip
   test "part2" do
-    input = nil
+    input = read_data(14, :sample)
     result = part2(input)
-
-    assert result
+    assert result == 2188189693529
   end
 end

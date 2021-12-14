@@ -23,7 +23,8 @@ I decided to try learning a completely new language, these are the solutions I c
 | [11][p11] | Dumbo Octopus           | [day_11.ex][s11] |   ⭐   |   ⭐   |
 | [12][p12] | Passage Pathing         | [day_12.ex][s12] |   ⭐   |   ⭐   |
 | [13][p13] | Transparent Origami     | [day_13.ex][s13] |   ⭐   |   ⭐   |
-|        14 | ...                     |                  |        |        |
+| [14][p14] | Extended Polymerization | [day_14.ex][s14] |   ⭐   |   🎁   |
+|        15 | ...                     |                  |        |        |
 
 **Key**: ⭐ Completed &nbsp;&nbsp; 🎁 In progress &nbsp;&nbsp; 😔 Gave up
 
@@ -143,6 +144,7 @@ inputs: none specified
 |     |    2 |  5.87 |    170 ms |    ±2.57% |    169 ms |    184 ms |
 |  13 |    1 |  1400 |   0.71 ms |    ±13.9% |   0.69 ms |   1.08 ms |
 |     |    2 |   810 |   1.23 ms |    ±6.76% |   1.21 ms |   1.61 ms |
+|  14 |    1 |   253 |   3.96 ms |    ±13.4% |   3.81 ms |   6.31 ms |
 
 ## Acknowledgments
 
@@ -171,6 +173,7 @@ Distributed under the MIT Licence. See [LICENCE](LICENCE) for more information.
 [p11]: https://adventofcode.com/2021/day/11
 [p12]: https://adventofcode.com/2021/day/12
 [p13]: https://adventofcode.com/2021/day/13
+[p14]: https://adventofcode.com/2021/day/14
 [s01]: lib/advent_of_code/day_01.ex
 [s02]: lib/advent_of_code/day_02.ex
 [s03]: lib/advent_of_code/day_03.ex
@@ -184,3 +187,4 @@ Distributed under the MIT Licence. See [LICENCE](LICENCE) for more information.
 [s11]: lib/advent_of_code/day_11.ex
 [s12]: lib/advent_of_code/day_12.ex
 [s13]: lib/advent_of_code/day_13.ex
+[s14]: lib/advent_of_code/day_14.ex
