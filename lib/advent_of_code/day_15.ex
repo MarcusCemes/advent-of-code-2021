@@ -1,23 +1,31 @@
 defmodule AdventOfCode.Day15 do
   import AdventOfCode.Utils
 
-  @typep cavern :: [[integer()]]
-  @typep coords :: {integer(), integer()}
+  @typep int_map :: [[integer]]
+  @typep cavern :: int_map
+  @typep coords :: {integer, integer}
 
-  @typep path_node :: {boolean(), integer()}
-  @typep paths :: Map.t(coords, path_node())
+  @typep path_node :: {boolean, integer}
+  @typep paths :: Map.t(coords, path_node)
 
-  @spec part1([binary()]) :: integer()
+  @spec part1([binary]) :: integer
   def part1(args) do
     cavern = parse_args(args)
-    path_find(cavern, end_coords(cavern), Map.new([{{0, 0}, {false, 0}}]))
+    dimensions = map_dimensions(cavern)
+    starting_state = [{{0, 0}, {false, 0}}] |> Map.new()
+    path_find(cavern, dimensions, starting_state)
   end
 
-  def part2(_args) do
+  @spec part2([binary]) :: integer
+  def part2(args) do
+    cavern = parse_args(args) |> tile_cavern()
+    dimensions = map_dimensions(cavern)
+    starting_state = [{{0, 0}, {false, 0}}] |> Map.new()
+    path_find(cavern, dimensions, starting_state)
   end
 
   # A fairly basic and inefficient implementation of Dijkstra's algorithm
-  @spec path_find(cavern(), coords(), paths()) :: integer()
+  @spec path_find(cavern, coords, paths) :: integer
   defp path_find(cavern, end_coords, paths) do
     {coords, risk} = next_node(paths)
 
@@ -45,7 +53,7 @@ defmodule AdventOfCode.Day15 do
   end
 
   # Find an unvisited node with the lowest risk of all unvisited nodes
-  @spec next_node(paths()) :: {coords(), integer()}
+  @spec next_node(paths) :: {coords, integer}
   defp next_node(paths) do
     {coords, {_, risk}} =
       Enum.filter(paths, fn {_, {visited, _}} -> !visited end)
@@ -54,24 +62,50 @@ defmodule AdventOfCode.Day15 do
     {coords, risk}
   end
 
+  @spec tile_cavern(cavern) :: cavern
+  defp tile_cavern(cavern) do
+    tile_offsets()
+    |> map_matrix(&cavern_add(cavern, &1))
+    |> join_matrices()
+  end
+
+  @spec cavern_add(cavern, integer) :: cavern
+  defp cavern_add(cavern, count), do: map_matrix(cavern, &cell_add(&1, count))
+  defp cell_add(value, count), do: rem(value + count - 1, 9) + 1
+
+  @spec tile_offsets() :: [[integer]]
+  defp tile_offsets(), do: for(y <- 0..4, do: for(x <- 0..4, do: x + y))
+
+  @spec join_matrices([[int_map]]) :: int_map
+  defp join_matrices(matrices) do
+    Enum.flat_map(matrices, fn line ->
+      Enum.zip(line) |> Enum.map(&(Tuple.to_list(&1) |> Enum.concat()))
+    end)
+  end
+
   # == Utilities == #
 
-  @spec map_at(coords(), Map.t(coords(), t)) :: t | nil when t: var
+  @spec map_at(coords, Map.t(coords, t)) :: t | nil when t: var
   defp map_at({x, y}, _) when x == -1 or y == -1, do: nil
   defp map_at({x, y}, cavern), do: cavern |> Enum.at(y, []) |> Enum.at(x)
 
-  @spec adjacent_coordinates(coords()) :: [coords()]
+  @spec map_matrix([[t]], (t -> u)) :: [[u]] when t: var, u: var
+  defp map_matrix(map, map_fn) do
+    Enum.map(map, fn line -> Enum.map(line, &map_fn.(&1)) end)
+  end
+
+  @spec adjacent_coordinates(coords) :: [coords]
   defp adjacent_coordinates({x, y}),
     do: for(dx <- -1..1, dy <- -1..1, dx * dy == 0, do: {x + dx, y + dy})
 
-  @spec end_coords(cavern()) :: coords()
-  defp end_coords(cavern) do
+  @spec map_dimensions(cavern) :: coords
+  defp map_dimensions(cavern) do
     y_size = length(cavern) - 1
     x_size = (List.last(cavern) |> length()) - 1
     {x_size, y_size}
   end
 
-  @spec parse_args([binary()]) :: [[integer()]]
+  @spec parse_args([binary]) :: int_map
   defp parse_args(args), do: Enum.map(args, &parse_line/1)
   defp parse_line(line), do: String.graphemes(line) |> Enum.map(&parse_int!/1)
 end

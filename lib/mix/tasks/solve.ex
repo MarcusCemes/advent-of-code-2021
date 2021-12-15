@@ -15,7 +15,7 @@ defmodule Mix.Tasks.Solve do
 
     results =
       1..25
-      |> Task.async_stream(&solve_day/1)
+      |> Task.async_stream(&solve_day/1, timeout: :infinity)
       |> Stream.each(&print_formatted_row/1)
       |> Enum.to_list()
 

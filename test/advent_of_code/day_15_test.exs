@@ -10,11 +10,9 @@ defmodule AdventOfCode.Day15Test do
     assert result == 40
   end
 
-  @tag :skip
   test "part2" do
-    input = nil
+    input = read_data(15, :sample)
     result = part2(input)
-
-    assert result
+    assert result == 315
   end
 end

@@ -1,6 +1,6 @@
 # 🎄 Advent Of Code 2021
 
-![elixir logo][elixir-badge] ![test status][test-badge] ![last commit][commit-badge] ![solutions](https://img.shields.io/badge/solutions-29/30-brightgreen?logo=star&style=for-the-badge)
+![elixir logo][elixir-badge] ![test status][test-badge] ![last commit][commit-badge] ![solutions](https://img.shields.io/badge/solutions-30/30-brightgreen?logo=star&style=for-the-badge)
 
 Hi! These are my Elixir solutions for the [Advent of Code 2021][advent-of-code].
 
@@ -24,7 +24,7 @@ I decided to try learning a completely new language, these are the solutions I c
 | [12][p12] | Passage Pathing         | [day_12.ex][s12] |   ⭐   |   ⭐   |
 | [13][p13] | Transparent Origami     | [day_13.ex][s13] |   ⭐   |   ⭐   |
 | [14][p14] | Extended Polymerization | [day_14.ex][s14] |   ⭐   |   ⭐   |
-| [15][p15] | Chiton                  | [day_15.ex][s15] |   ⭐   |   🎁   |
+| [15][p15] | Chiton                  | [day_15.ex][s15] |   ⭐   |   ⭐   |
 |        16 | ...                     |                  |        |        |
 
 **Key**: ⭐ Completed &nbsp;&nbsp; 🎁 In progress &nbsp;&nbsp; 😔 Gave up
@@ -60,6 +60,8 @@ You can run the solutions for all days at once, it shouldn't take more than a se
 ```bash
 $ mix solve
 ```
+
+**2021-12-15**: Day 15, part 2 takes several minutes, it might be a good idea to disable it.
 
 When running for the first time, the project will be compiled automatically. Each problem is run as a new task which will distribute the workload across your available CPU cores.
 
@@ -117,37 +119,38 @@ inputs: none specified
 
 ### Results
 
-| Day | Part |   IPS |   average | deviation |    median |    99th % |
-| --: | ---: | ----: | --------: | --------: | --------: | --------: |
-|   1 |    1 |  1150 |    870 μs |    ±17.6% |    850 μs |   1460 μs |
-|     |    2 |  1100 |    910 μs |    ±7.23% |    890 μs |   1230 μs |
-|   2 |    1 |  2410 |    410 μs |    ±8.89% |    410 μs |    500 μs |
-|     |    2 |  2350 |    430 μs |    ±7.33% |    420 μs |    500 μs |
-|   3 |    1 |   420 |   2.39 ms |    ±15.2% |   2.38 ms |   3.05 ms |
-|     |    2 |   330 |   3.01 ms |    ±7.80% |   2.92 ms |   3.85 ms |
-|   4 |    1 |   200 |   4.97 ms |    ±13.4% |   4.69 ms |   6.63 ms |
-|     |    2 |  61.2 |  16.33 ms |    ±1.83% |  16.23 ms |  17.79 ms |
-|   5 |    1 |  12.7 |  78.80 ms |    ±3.27% |  79.03 ms |  85.07 ms |
-|     |    2 |   6.6 | 151.67 ms |    ±4.60% | 151.54 ms | 169.70 ms |
-|   6 |    1 | 25800 |   38.8 μs |    ±15.1% |   38.2 μs |   50.1 μs |
-|     |    2 | 16900 |   59.1 μs |    ±11.8% |   58.4 μs |   76.5 μs |
-|   7 |    1 |  37.3 |   26.8 ms |    ±3.06% |   26.5 ms |   31.0 ms |
-|     |    2 |  29.0 |   34.5 ms |    ±3.20% |  34.10 ms |   39.6 ms |
-|   8 |    1 |  1800 |    554 μs |    ±12.2% |    547 μs |    749 μs |
-|     |    2 |   109 |   9.14 ms |    ±4.47% |   9.05 ms |   11.4 ms |
-|   9 |    1 |  45.7 |   31.8 ms |    ±13.3% |   21.2 ms |   29.3 ms |
-|     |    2 |  31.3 |   32.0 ms |    ±9.19% |   32.0 ms |   42.2 ms |
-|  10 |    1 |   735 |   1.36 ms |    ±7.95% |   1.34 ms |   1.84 ms |
-|     |    2 |   700 |   1.43 ms |    ±7.84% |   1.41 ms |   1.98 ms |
-|  11 |    1 |   393 |   2.54 ms |    ±4.84% |   2.52 ms |   3.22 ms |
-|     |    2 |  78.2 |   12.8 ms |    ±4.18% |   12.7 ms |   14.5 ms |
-|  12 |    1 |   189 |   5.28 ms |    ±7.80% |   5.13 ms |   7.28 ms |
-|     |    2 |  5.87 |    170 ms |    ±2.57% |    169 ms |    184 ms |
-|  13 |    1 |  1400 |   0.71 ms |    ±13.9% |   0.69 ms |   1.08 ms |
-|     |    2 |   810 |   1.23 ms |    ±6.76% |   1.21 ms |   1.61 ms |
-|  14 |    1 |  3680 |   0.27 ms |    ±20.2% |   0.26 ms |   0.53 ms |
-|     |    2 |   840 |   1.18 ms |    ±6.74% |   1.18 ms |   1.43 ms |
-|  15 |    1 |  0.60 |    1.66 s |    ±1.38% |    1.65 s |    1.69 s |
+| Day | Part |     IPS |   average | deviation |    median |    99th % |
+| --: | ---: | ------: | --------: | --------: | --------: | --------: |
+|   1 |    1 |    1150 |    870 μs |    ±17.6% |    850 μs |   1460 μs |
+|     |    2 |    1100 |    910 μs |    ±7.23% |    890 μs |   1230 μs |
+|   2 |    1 |    2410 |    410 μs |    ±8.89% |    410 μs |    500 μs |
+|     |    2 |    2350 |    430 μs |    ±7.33% |    420 μs |    500 μs |
+|   3 |    1 |     420 |   2.39 ms |    ±15.2% |   2.38 ms |   3.05 ms |
+|     |    2 |     330 |   3.01 ms |    ±7.80% |   2.92 ms |   3.85 ms |
+|   4 |    1 |     200 |   4.97 ms |    ±13.4% |   4.69 ms |   6.63 ms |
+|     |    2 |    61.2 |  16.33 ms |    ±1.83% |  16.23 ms |  17.79 ms |
+|   5 |    1 |    12.7 |  78.80 ms |    ±3.27% |  79.03 ms |  85.07 ms |
+|     |    2 |     6.6 | 151.67 ms |    ±4.60% | 151.54 ms | 169.70 ms |
+|   6 |    1 |   25800 |   38.8 μs |    ±15.1% |   38.2 μs |   50.1 μs |
+|     |    2 |   16900 |   59.1 μs |    ±11.8% |   58.4 μs |   76.5 μs |
+|   7 |    1 |    37.3 |   26.8 ms |    ±3.06% |   26.5 ms |   31.0 ms |
+|     |    2 |    29.0 |   34.5 ms |    ±3.20% |  34.10 ms |   39.6 ms |
+|   8 |    1 |    1800 |    554 μs |    ±12.2% |    547 μs |    749 μs |
+|     |    2 |     109 |   9.14 ms |    ±4.47% |   9.05 ms |   11.4 ms |
+|   9 |    1 |    45.7 |   31.8 ms |    ±13.3% |   21.2 ms |   29.3 ms |
+|     |    2 |    31.3 |   32.0 ms |    ±9.19% |   32.0 ms |   42.2 ms |
+|  10 |    1 |     735 |   1.36 ms |    ±7.95% |   1.34 ms |   1.84 ms |
+|     |    2 |     700 |   1.43 ms |    ±7.84% |   1.41 ms |   1.98 ms |
+|  11 |    1 |     393 |   2.54 ms |    ±4.84% |   2.52 ms |   3.22 ms |
+|     |    2 |    78.2 |   12.8 ms |    ±4.18% |   12.7 ms |   14.5 ms |
+|  12 |    1 |     189 |   5.28 ms |    ±7.80% |   5.13 ms |   7.28 ms |
+|     |    2 |    5.87 |    170 ms |    ±2.57% |    169 ms |    184 ms |
+|  13 |    1 |    1400 |   0.71 ms |    ±13.9% |   0.69 ms |   1.08 ms |
+|     |    2 |     810 |   1.23 ms |    ±6.76% |   1.21 ms |   1.61 ms |
+|  14 |    1 |    3680 |   0.27 ms |    ±20.2% |   0.26 ms |   0.53 ms |
+|     |    2 |     840 |   1.18 ms |    ±6.74% |   1.18 ms |   1.43 ms |
+|  15 |    1 |    0.60 |    1.66 s |    ±1.38% |    1.65 s |    1.69 s |
+|     |    2 | 15 mins |         - |         - |         - |         - |
 
 ## Acknowledgments
 
