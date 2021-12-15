@@ -1,6 +1,6 @@
 # 🎄 Advent Of Code 2021
 
-![elixir logo][elixir-badge] ![test status][test-badge] ![last commit][commit-badge] ![solutions](https://img.shields.io/badge/solutions-28/28-brightgreen?logo=star&style=for-the-badge)
+![elixir logo][elixir-badge] ![test status][test-badge] ![last commit][commit-badge] ![solutions](https://img.shields.io/badge/solutions-29/30-brightgreen?logo=star&style=for-the-badge)
 
 Hi! These are my Elixir solutions for the [Advent of Code 2021][advent-of-code].
 
@@ -24,7 +24,8 @@ I decided to try learning a completely new language, these are the solutions I c
 | [12][p12] | Passage Pathing         | [day_12.ex][s12] |   ⭐   |   ⭐   |
 | [13][p13] | Transparent Origami     | [day_13.ex][s13] |   ⭐   |   ⭐   |
 | [14][p14] | Extended Polymerization | [day_14.ex][s14] |   ⭐   |   ⭐   |
-|        15 | ...                     |                  |        |        |
+| [15][p15] | Chiton                  | [day_15.ex][s15] |   ⭐   |   🎁   |
+|        16 | ...                     |                  |        |        |
 
 **Key**: ⭐ Completed &nbsp;&nbsp; 🎁 In progress &nbsp;&nbsp; 😔 Gave up
 
@@ -146,6 +147,7 @@ inputs: none specified
 |     |    2 |   810 |   1.23 ms |    ±6.76% |   1.21 ms |   1.61 ms |
 |  14 |    1 |  3680 |   0.27 ms |    ±20.2% |   0.26 ms |   0.53 ms |
 |     |    2 |   840 |   1.18 ms |    ±6.74% |   1.18 ms |   1.43 ms |
+|  15 |    1 |  0.60 |    1.66 s |    ±1.38% |    1.65 s |    1.69 s |
 
 ## Acknowledgments
 
@@ -175,6 +177,7 @@ Distributed under the MIT Licence. See [LICENCE](LICENCE) for more information.
 [p12]: https://adventofcode.com/2021/day/12
 [p13]: https://adventofcode.com/2021/day/13
 [p14]: https://adventofcode.com/2021/day/14
+[p15]: https://adventofcode.com/2021/day/15
 [s01]: lib/advent_of_code/day_01.ex
 [s02]: lib/advent_of_code/day_02.ex
 [s03]: lib/advent_of_code/day_03.ex
@@ -189,3 +192,4 @@ Distributed under the MIT Licence. See [LICENCE](LICENCE) for more information.
 [s12]: lib/advent_of_code/day_12.ex
 [s13]: lib/advent_of_code/day_13.ex
 [s14]: lib/advent_of_code/day_14.ex
+[s15]: lib/advent_of_code/day_15.ex
