@@ -1,82 +1,96 @@
 defmodule AdventOfCode.Day15 do
   import AdventOfCode.Utils
 
-  @typep int_map :: [[integer]]
-  @typep cavern :: int_map
+  @typep matrix :: [[integer]]
   @typep coords :: {integer, integer}
-
-  @typep path_node :: {boolean, integer}
-  @typep paths :: Map.t(coords, path_node)
+  @typep priority_queue :: [{coords, integer}]
+  @typep visit_map :: Map.t(coords, integer)
 
   @spec part1([binary]) :: integer
   def part1(args) do
     cavern = parse_args(args)
-    dimensions = map_dimensions(cavern)
-    starting_state = [{{0, 0}, {false, 0}}] |> Map.new()
-    path_find(cavern, dimensions, starting_state)
+    dimensions = matrix_dimensions(cavern)
+    path_find(cavern, dimensions, {0, 0})
   end
 
   @spec part2([binary]) :: integer
   def part2(args) do
     cavern = parse_args(args) |> tile_cavern()
-    dimensions = map_dimensions(cavern)
-    starting_state = [{{0, 0}, {false, 0}}] |> Map.new()
-    path_find(cavern, dimensions, starting_state)
+    dimensions = matrix_dimensions(cavern)
+    path_find(cavern, dimensions, {0, 0})
   end
 
-  # A fairly basic and inefficient implementation of Dijkstra's algorithm
-  @spec path_find(cavern, coords, paths) :: integer
-  defp path_find(cavern, end_coords, paths) do
-    {coords, risk} = next_node(paths)
+  @spec path_find(matrix, coords, coords) :: integer
+  defp path_find(cavern, target, start) do
+    do_path_find(cavern, target, [{start, 0}], Map.new())
+  end
 
-    case coords do
-      ^end_coords ->
-        risk
+  # This is the hot loop, it will recursively pick a coordinate from the
+  # head of the priority queue and run a variant of the Dijkstra algorithm.
+  @spec do_path_find(matrix, coords, priority_queue, visit_map) :: integer
+  defp do_path_find(_, target, [{target, risk} | _], _), do: risk
 
-      coords ->
-        paths =
-          adjacent_coordinates(coords)
-          |> Enum.flat_map(fn adj_coords ->
-            case map_at(adj_coords, cavern) do
-              nil -> []
-              adj_risk -> [{adj_coords, {false, risk + adj_risk}}]
-            end
-          end)
-          |> Map.new()
-          |> Map.merge(paths, fn _, {_, new_risk}, {visited, old_risk} ->
-            {visited, Enum.min([new_risk, old_risk])}
-          end)
-          |> Map.put(coords, {true, risk})
-
-        path_find(cavern, end_coords, paths)
+  defp do_path_find(cavern, target, [{coords, risk} | queue], visited) do
+    if Map.has_key?(visited, coords) do
+      do_path_find(cavern, target, queue, visited)
+    else
+      queue = extend_queue(cavern, coords, risk, queue)
+      visited = Map.update(visited, coords, risk, &Enum.min([&1, risk]))
+      do_path_find(cavern, target, queue, visited)
     end
   end
 
-  # Find an unvisited node with the lowest risk of all unvisited nodes
-  @spec next_node(paths) :: {coords, integer}
-  defp next_node(paths) do
-    {coords, {_, risk}} =
-      Enum.filter(paths, fn {_, {visited, _}} -> !visited end)
-      |> Enum.min_by(fn {_, {_, risk}} -> risk end)
-
-    {coords, risk}
+  @spec extend_queue(matrix, coords, integer, priority_queue) :: priority_queue
+  defp extend_queue(cavern, coords, risk, queue) do
+    adjacent_coordinates(coords)
+    |> Enum.map(fn pos -> {pos, matrix_at(pos, cavern)} end)
+    |> Enum.filter(fn {_, risk} -> risk != nil end)
+    |> Enum.map(fn {pos, pos_risk} -> {pos, risk + pos_risk} end)
+    |> insert_queue(queue)
   end
 
-  @spec tile_cavern(cavern) :: cavern
+  # Insert new coordinates into the right place of the priority queue.
+  # There may be duplicates in the priority queue, as long as the position
+  # is marked as visited, the duplicates will be ignored by do_path_find().
+  @spec insert_queue([{coords, integer}], [{coords, integer}]) :: [{coords, integer}]
+  defp insert_queue(new_items, queue) do
+    do_insert_queue(Enum.sort_by(new_items, &elem(&1, 1)), queue)
+  end
+
+  # Profiling reveals that this function uses 62.95% of execution time
+  defp do_insert_queue(sorted_items, []), do: sorted_items
+  defp do_insert_queue([], queue), do: queue
+
+  defp do_insert_queue(sorted_items, queue) do
+    risk = hd(sorted_items) |> elem(1)
+    queue_risk = hd(queue) |> elem(1)
+
+    if risk < queue_risk do
+      [head | tail] = sorted_items
+      [head | do_insert_queue(tail, queue)]
+    else
+      [hd(queue) | do_insert_queue(sorted_items, tl(queue))]
+    end
+  end
+
+  # Takes a matrix and tiles it into a 5x5 with the correct increments (see problem)
+  @spec tile_cavern(matrix) :: matrix
   defp tile_cavern(cavern) do
     tile_offsets()
-    |> map_matrix(&cavern_add(cavern, &1))
+    |> matrix_map(&cavern_add(cavern, &1))
     |> join_matrices()
   end
 
-  @spec cavern_add(cavern, integer) :: cavern
-  defp cavern_add(cavern, count), do: map_matrix(cavern, &cell_add(&1, count))
+  @spec cavern_add(matrix, integer) :: matrix
+  defp cavern_add(cavern, count), do: matrix_map(cavern, &cell_add(&1, count))
   defp cell_add(value, count), do: rem(value + count - 1, 9) + 1
 
+  # Generates the matrix of offsets that need to be added to each tile
   @spec tile_offsets() :: [[integer]]
   defp tile_offsets(), do: for(y <- 0..4, do: for(x <- 0..4, do: x + y))
 
-  @spec join_matrices([[int_map]]) :: int_map
+  # This will concatenate a matrix of matrices together into one large matrix
+  @spec join_matrices([[matrix]]) :: matrix
   defp join_matrices(matrices) do
     Enum.flat_map(matrices, fn line ->
       Enum.zip(line) |> Enum.map(&(Tuple.to_list(&1) |> Enum.concat()))
@@ -85,27 +99,26 @@ defmodule AdventOfCode.Day15 do
 
   # == Utilities == #
 
-  @spec map_at(coords, Map.t(coords, t)) :: t | nil when t: var
-  defp map_at({x, y}, _) when x == -1 or y == -1, do: nil
-  defp map_at({x, y}, cavern), do: cavern |> Enum.at(y, []) |> Enum.at(x)
+  @spec matrix_at(coords, Map.t(coords, t)) :: t | nil when t: var
+  defp matrix_at({x, y}, _) when x == -1 or y == -1, do: nil
+  defp matrix_at({x, y}, cavern), do: cavern |> Enum.at(y, []) |> Enum.at(x)
 
-  @spec map_matrix([[t]], (t -> u)) :: [[u]] when t: var, u: var
-  defp map_matrix(map, map_fn) do
+  @spec matrix_map([[t]], (t -> u)) :: [[u]] when t: var, u: var
+  defp matrix_map(map, map_fn) do
     Enum.map(map, fn line -> Enum.map(line, &map_fn.(&1)) end)
   end
 
   @spec adjacent_coordinates(coords) :: [coords]
-  defp adjacent_coordinates({x, y}),
-    do: for(dx <- -1..1, dy <- -1..1, dx * dy == 0, do: {x + dx, y + dy})
+  defp adjacent_coordinates({x, y}), do: [{x + 1, y}, {x, y + 1}, {x - 1, y}, {x, y - 1}]
 
-  @spec map_dimensions(cavern) :: coords
-  defp map_dimensions(cavern) do
-    y_size = length(cavern) - 1
-    x_size = (List.last(cavern) |> length()) - 1
+  @spec matrix_dimensions(matrix) :: coords
+  defp matrix_dimensions(matrix) do
+    y_size = length(matrix) - 1
+    x_size = (hd(matrix) |> length()) - 1
     {x_size, y_size}
   end
 
-  @spec parse_args([binary]) :: int_map
+  @spec parse_args([binary]) :: matrix
   defp parse_args(args), do: Enum.map(args, &parse_line/1)
   defp parse_line(line), do: String.graphemes(line) |> Enum.map(&parse_int!/1)
 end
