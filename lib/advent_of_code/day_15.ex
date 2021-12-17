@@ -1,77 +1,108 @@
 defmodule AdventOfCode.Day15 do
+  # This day's code is a bit longer than usual.
+  # The original implementation took half an hour, through multiple
+  # revisions, that time has been pushed down to 600ms!F
+  # At the heart of this improvement is the priority queue implementation.
+
   import AdventOfCode.Utils
 
   @typep matrix :: [[integer]]
   @typep baked_matrix :: tuple
   @typep coords :: {integer, integer}
-  @typep priority_queue :: [{coords, integer}]
+  @typep priority_queue :: {Map.t(integer, [coords]), integer | nil}
   @typep visit_map :: Map.t(coords, integer)
 
   @spec part1([binary]) :: integer
-  def part1(args) do
-    cavern = parse_args(args) |> bake_matrix()
+  def part1(args), do: parse_args(args) |> bake_matrix() |> solve_problem()
+
+  @spec part2([binary]) :: integer
+  def part2(args), do: parse_args(args) |> tile_matrix() |> bake_matrix() |> solve_problem()
+
+  @spec solve_problem(baked_matrix) :: integer
+  defp solve_problem(cavern) do
     dimensions = baked_matrix_dimensions(cavern)
     path_find(cavern, dimensions, {0, 0})
   end
 
-  @spec part2([binary]) :: integer
-  def part2(args) do
-    cavern = parse_args(args) |> tile_matrix() |> bake_matrix()
-    dimensions = baked_matrix_dimensions(cavern)
-    path_find(cavern, dimensions, {0, 0})
-  end
+  # == Path finding == #
+
+  # The original Dijkstra implementation took half an hour to solve.
+  # Iterative improvements on a priority queue brought this down to 600ms!
 
   @spec path_find(baked_matrix, coords, coords) :: integer
   defp path_find(cavern, target, start) do
-    do_path_find(cavern, target, [{start, 0}], Map.new())
+    do_path_find(cavern, target, {Map.new([{0, [start]}]), 0}, Map.new())
   end
 
-  # This is the hot loop, it will recursively pick a coordinate from the
-  # head of the priority queue and run a variant of the Dijkstra algorithm.
   @spec do_path_find(baked_matrix, coords, priority_queue, visit_map) :: integer
-  defp do_path_find(_, target, [{target, risk} | _], _), do: risk
+  defp do_path_find(cavern, target, queue, visited) do
+    {queue, coords, risk} = pop_queue(queue)
 
-  defp do_path_find(cavern, target, [{coords, risk} | queue], visited) do
-    if Map.has_key?(visited, coords) do
-      do_path_find(cavern, target, queue, visited)
-    else
-      queue = extend_queue(cavern, coords, risk, queue)
-      visited = Map.update(visited, coords, risk, &Enum.min([&1, risk]))
-      do_path_find(cavern, target, queue, visited)
+    case coords do
+      ^target ->
+        risk
+
+      coords ->
+        if Map.has_key?(visited, coords) do
+          do_path_find(cavern, target, queue, visited)
+        else
+          queue = extend_queue(cavern, coords, risk, queue)
+          visited = Map.update(visited, coords, risk, &Enum.min([&1, risk]))
+          do_path_find(cavern, target, queue, visited)
+        end
     end
   end
 
+  # == Priority queue == #
+
+  # The current implementation uses a {map, integer} tuple.
+  # The map stores a list of coordinates under their respective risks.
+  # The list is very quick to update, as only the head needs to be popped/pushed.
+  # The smallest key is also passed around to avoid unnecessary key traversals.
+
+  # Additional optimisations that might help include passing the queue head as
+  # an additional parameter to avoid that extra lookup, and adding new
+  # coordinates with the same risk at the same time (may cause more overhead than gain).
+
+  # Remove the head of the priority queue, recalculating the next minimum risk if necessary.
+  @spec pop_queue(priority_queue) :: {priority_queue, coords, integer}
+  defp pop_queue({map, min_risk}) do
+    {popped, map} = Map.get_and_update(map, min_risk, &pop_queue_updater/1)
+
+    case popped do
+      {:unchanged, coords} ->
+        {{map, min_risk}, coords, min_risk}
+
+      [coords] ->
+        new_min_risk = if map_size(map) == 0, do: nil, else: Map.keys(map) |> Enum.min()
+        {{map, new_min_risk}, coords, min_risk}
+    end
+  end
+
+  @spec pop_queue_updater([coords]) :: {{:unchanged, coords}, [coords]} | nil
+  defp pop_queue_updater([_ | []]), do: :pop
+  defp pop_queue_updater([head | tail]), do: {{:unchanged, head}, tail}
+
+  # Calculates the total risk of adjacent coordinates and adds them to the queue.
   @spec extend_queue(baked_matrix, coords, integer, priority_queue) :: priority_queue
   defp extend_queue(cavern, coords, risk, queue) do
     adjacent_coordinates(coords)
-    |> Enum.map(fn pos -> {pos, cavern_at(pos, cavern)} end)
+    |> Enum.map(&{&1, baked_at(&1, cavern)})
     |> Enum.filter(fn {_, risk} -> risk != nil end)
     |> Enum.map(fn {pos, pos_risk} -> {pos, risk + pos_risk} end)
-    |> insert_queue(queue)
+    |> push_queue(queue)
   end
 
-  # Insert new coordinates into the right place of the priority queue.
-  # There may be duplicates in the priority queue, as long as the position
-  # is marked as visited, the duplicates will be ignored by do_path_find().
-  @spec insert_queue([{coords, integer}], [{coords, integer}]) :: [{coords, integer}]
-  defp insert_queue(new_items, queue) do
-    do_insert_queue(Enum.sort_by(new_items, &elem(&1, 1)), queue)
+  @spec push_queue([{coords, integer}], priority_queue) :: priority_queue
+  defp push_queue([], queue), do: queue
+
+  defp push_queue([{coords, risk} | rest], {map, min_risk}) do
+    map = Map.update(map, risk, [coords], fn existing -> [coords | existing] end)
+    min_risk = min(min_risk, risk)
+    push_queue(rest, {map, min_risk})
   end
 
-  # Profiling reveals that this function uses 62.95% of execution time
-  defp do_insert_queue(sorted_items, []), do: sorted_items
-  defp do_insert_queue([], queue), do: queue
-
-  defp do_insert_queue(sorted_items, queue) do
-    {_, risk} = hd(sorted_items)
-    {_, queue_risk} = hd(queue)
-
-    if risk < queue_risk do
-      [hd(sorted_items) | do_insert_queue(tl(sorted_items), queue)]
-    else
-      [hd(queue) | do_insert_queue(sorted_items, tl(queue))]
-    end
-  end
+  # == Matrix == #
 
   # Takes a matrix and tiles it into a 5x5 with the correct increments (see problem)
   @spec tile_matrix(matrix) :: matrix
@@ -91,16 +122,11 @@ defmodule AdventOfCode.Day15 do
 
   # This will concatenate a matrix of matrices together into one large matrix
   @spec join_matrices([[matrix]]) :: matrix
-  defp join_matrices(matrices) do
-    Enum.flat_map(matrices, fn line ->
-      Enum.zip(line) |> Enum.map(&(Tuple.to_list(&1) |> Enum.concat()))
-    end)
-  end
+  defp join_matrices(matrices), do: Enum.flat_map(matrices, &join_matrices_line/1)
+  defp join_matrices_line(line), do: Enum.map(Enum.zip(line), &Enum.concat(Tuple.to_list(&1)))
 
-  # == Utilities == #
-
-  @spec cavern_at(coords, baked_matrix) :: integer | nil
-  defp cavern_at({x, y}, cavern) do
+  @spec baked_at(coords, baked_matrix) :: integer | nil
+  defp baked_at({x, y}, cavern) do
     try do
       cavern |> elem(y) |> elem(x)
     rescue
@@ -125,7 +151,7 @@ defmodule AdventOfCode.Day15 do
   end
 
   # Converts a two-dimensional list to a two-dimensional tuple.
-  # Tuples are good for read-only items, as they provide O(1) access.
+  # Tuples are good for reads, as they provide O(1) access times.
   @spec bake_matrix(matrix) :: baked_matrix
   defp bake_matrix(matrix), do: Enum.map(matrix, &List.to_tuple/1) |> List.to_tuple()
 
