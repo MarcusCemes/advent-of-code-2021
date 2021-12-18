@@ -1,6 +1,6 @@
 # 🎄 Advent Of Code 2021
 
-![elixir logo][elixir-badge] ![test status][test-badge] ![last commit][commit-badge] ![solutions](https://img.shields.io/badge/solutions-32/34-brightgreen?logo=star&style=for-the-badge)
+![elixir logo][elixir-badge] ![test status][test-badge] ![last commit][commit-badge] ![solutions](https://img.shields.io/badge/solutions-34/36-brightgreen?logo=star&style=for-the-badge)
 
 Hi! These are my Elixir solutions for the [Advent of Code 2021][advent-of-code].
 
@@ -25,7 +25,7 @@ I decided to try learning a completely new language, these are the solutions I c
 | [13][p13] | Transparent Origami     | [day_13.ex][s13] |   ⭐   |   ⭐   |
 | [14][p14] | Extended Polymerization | [day_14.ex][s14] |   ⭐   |   ⭐   |
 | [15][p15] | Chiton                  | [day_15.ex][s15] |   ⭐   |   ⭐   |
-|        16 | ...                     |                  |        |        |
+| [16][p16] | Packet Decoder          | [day_16.ex][s16] |   ⭐   |   ⭐   |
 | [17][p17] | Trick Shot              | [day_17.ex][s17] |   ⭐   |   ⭐   |
 |        18 | ...                     |                  |        |        |
 
@@ -151,6 +151,8 @@ inputs: none specified
 |     |    2 |   840 |   1.18 ms |    ±6.74% |   1.18 ms |   1.43 ms |
 |  15 |    1 |  59.9 |   16.7 ms |    ±15.1% |   16.1 ms |   28.6 ms |
 |     |    2 |  1.65 |    608 ms |    ±6.77% |    598 ms |    705 ms |
+|  16 |    1 | 10480 |   95.4 us |    ±17.2% |   90.1 us |    145 us |
+|     |    2 | 10100 |   99.0 us |    ±16.1% |   94.3 us |    152 us |
 |  17 |    1 |  66.3 |   15.1 ms |    ±10.9% |   14.7 ms |   21.5 ms |
 |     |    2 |  65.2 |   15.3 ms |    ±11.4% |   15.0 ms |   21.7 ms |
 
@@ -183,6 +185,7 @@ Distributed under the MIT Licence. See [LICENCE](LICENCE) for more information.
 [p13]: https://adventofcode.com/2021/day/13
 [p14]: https://adventofcode.com/2021/day/14
 [p15]: https://adventofcode.com/2021/day/15
+[p16]: https://adventofcode.com/2021/day/16
 [p17]: https://adventofcode.com/2021/day/17
 [s01]: lib/advent_of_code/day_01.ex
 [s02]: lib/advent_of_code/day_02.ex
@@ -199,4 +202,5 @@ Distributed under the MIT Licence. See [LICENCE](LICENCE) for more information.
 [s13]: lib/advent_of_code/day_13.ex
 [s14]: lib/advent_of_code/day_14.ex
 [s15]: lib/advent_of_code/day_15.ex
+[s16]: lib/advent_of_code/day_16.ex
 [s17]: lib/advent_of_code/day_17.ex
