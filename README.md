@@ -1,6 +1,6 @@
 # 🎄 Advent Of Code 2021
 
-![elixir logo][elixir-badge] ![test status][test-badge] ![last commit][commit-badge] ![solutions](https://img.shields.io/badge/solutions-34/36-brightgreen?logo=star&style=for-the-badge)
+![elixir logo][elixir-badge] ![test status][test-badge] ![last commit][commit-badge] ![solutions](https://img.shields.io/badge/solutions-35/50-brightgreen?logo=star&style=for-the-badge)
 
 Hi! These are my Elixir solutions for the [Advent of Code 2021][advent-of-code].
 
@@ -28,6 +28,7 @@ I decided to try learning a completely new language, these are the solutions I c
 | [16][p16] | Packet Decoder          | [day_16.ex][s16] |   ⭐   |   ⭐   |
 | [17][p17] | Trick Shot              | [day_17.ex][s17] |   ⭐   |   ⭐   |
 |        18 | ...                     |                  |        |        |
+| [25][p25] | Sea Cucumber            | [day_25.ex][s25] |   ⭐   |   🎁   |
 
 **Key**: ⭐ Completed &nbsp;&nbsp; 🎁 In progress &nbsp;&nbsp; 😔 Gave up
 
@@ -155,6 +156,7 @@ inputs: none specified
 |     |    2 | 10100 |   99.0 us |    ±16.1% |   94.3 us |    152 us |
 |  17 |    1 |  66.3 |   15.1 ms |    ±10.9% |   14.7 ms |   21.5 ms |
 |     |    2 |  65.2 |   15.3 ms |    ±11.4% |   15.0 ms |   21.7 ms |
+|  25 |    1 |  0.41 |    2.45 s |    ±0.19% |    2.45 s |    2.46 s |
 
 ## Acknowledgments
 
@@ -187,6 +189,7 @@ Distributed under the MIT Licence. See [LICENCE](LICENCE) for more information.
 [p15]: https://adventofcode.com/2021/day/15
 [p16]: https://adventofcode.com/2021/day/16
 [p17]: https://adventofcode.com/2021/day/17
+[p25]: https://adventofcode.com/2021/day/25
 [s01]: lib/advent_of_code/day_01.ex
 [s02]: lib/advent_of_code/day_02.ex
 [s03]: lib/advent_of_code/day_03.ex
@@ -204,3 +207,4 @@ Distributed under the MIT Licence. See [LICENCE](LICENCE) for more information.
 [s15]: lib/advent_of_code/day_15.ex
 [s16]: lib/advent_of_code/day_16.ex
 [s17]: lib/advent_of_code/day_17.ex
+[s25]: lib/advent_of_code/day_25.ex
